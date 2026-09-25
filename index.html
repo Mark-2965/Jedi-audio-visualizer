@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jedi Bank - Virtual Secure Portal</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <!-- 🔐 STEP 1: MULTI-TENANT SECURE AUTHENTICATION GATE -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="login-logo">🏛️</div>
+                <h2>Jedi Bank Core</h2>
+                <p>Multi-Tenant Security Gate</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="userSelect">Select Account Profile Channel</label>
+                <select id="userSelect" class="login-select">
+                    <option value="" disabled selected>Choose tenant node...</option>
+                    <option value="bismark">Bismark (Premium Diamond)</option>
+                    <option value="peace">Peace (Standard Tier-1)</option>
+                    <option value="john">Mr. John Mensah (Enterprise Business)</option>
+                    <option value="beatrice">Beatrice Okim (Gold VIP Savings)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="userPassword">Authorization Security PIN</label>
+                <input type="password" id="userPassword" class="login-input" placeholder="••••••••" maxlength="8">
+            </div>
+
+            <button class="login-btn" id="loginBtn">AUTHORIZE SESSION</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <!-- 💳 STEP 2: MAIN VERTICAL SIDEBAR BANK CONTAINER -->
+    <div class="chat-container blurred" id="mainContainer">
+        
+                <!-- 🎖️ BRANDING HEADER (Top Padding Calibrated for Absolute Visibility) -->
+        <div class="chat-header">
+            <div class="avatar-container" style="cursor: pointer;" id="avatarContainer" title="Click to upload custom profile picture">
+                <div class="bot-avatar">
+                    <img id="profileImage" src="https://unsplash.com" alt="Jedi Core Bot Portal">
+                </div>
+                <!-- Hidden file upload listener element node -->
+                <input type="file" id="avatarPicker" accept="image/*" style="display: none;">
+                <div class="online-indicator"></div>
+            </div>
+            <div class="header-text">
+                <h2 id="bankTitle">Jedi Premium Bank</h2>
+                <p>Secure Self-Service Agent Vault</p>
+            </div>
+            <div class="user-badge" id="userBadge">Guest Session</div>
+        </div>
+
+
+        <div class="chat-feed" id="chatFeed">
+            <div class="message bot" id="welcomeMessage">
+                Welcome to Jedi Bank Customer Portal. Please authorize your session credentials above to clear account actions. 🦾💳
+            </div>
+        </div>
+
+        <!-- ⌨️ INPUT PANEL WITH NEW MICROPHONE ELEMENT -->
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="userInput" placeholder="Authorize prompt matrix line..." disabled>
+            <button class="mic-btn" id="micBtn" title="Speak to Jedi Agent" disabled>🎙️</button>
+            <button class="send-btn" disabled>SEND</button>
+        </div>
+
+    </div>
+
+    <!-- 🌐 STEP 3: FLOATING ECOSYSTEM ACTIONS SIDEBAR (Floats elegantly on the right) -->
+    <div class="ecosystem-sidebar blurred" id="ecosystemSidebar">
+        <div class="sidebar-title">Ecosystem Quick Shortcuts</div>
+        
+        <button class="eco-btn" data-intent="Book a luxury flight ticket to London">
+            <span class="eco-icon">✈️</span>
+            <div class="eco-text"><strong>Book Flight</strong><p>London Travel Matrix</p></div>
+        </button>
+
+        <button class="eco-btn" data-intent="Request a premium Uber ride station haul">
+            <span class="eco-icon">🚗</span>
+            <div class="eco-text"><strong>Request Uber</strong><p>On-Demand Logistics</p></div>
+        </button>
+
+        <button class="eco-btn" data-intent="Check my statement account transactions ledger">
+            <span class="eco-icon">📜</span>
+            <div class="eco-text"><strong>Recent Audit</strong><p>Ledger Statement Tracker</p></div>
+        </button>
+
+        <button class="eco-btn" data-intent="Verify secure profile bvn protection vector">
+            <span class="eco-icon">🎖️</span>
+            <div class="eco-text"><strong>Security Core</strong><p>BVN Lock Integrity</p></div>
+        </button>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
