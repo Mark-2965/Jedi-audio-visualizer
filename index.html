@@ -445,7 +445,7 @@
             <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
         </div>
     </div>
-    <script>
+        <script>
         const canvas = document.getElementById('visualizer-canvas');
         const ctx = canvas.getContext('2d');
         const startBtn = document.getElementById('start-btn');
@@ -467,7 +467,7 @@
 
         // Dynamic State Metrics
         let studyHours = 0.0;
-        let vapePuffs = 5; // Preserved baseline tracking
+        let vapePuffs = 5; // Preserving your 5-puff victory history!
         let rotationAngle = 0;
         let accountabilityLedger = [];
 
@@ -488,6 +488,21 @@
         let mediaRecorder = null;
         let audioChunks = [];
         let isRecording = false;
+
+        // Synchronize interface view on load
+        document.getElementById('vape-val').innerText = vapePuffs;
+
+        function resizeCanvas() {
+            if (window.innerWidth < 768) {
+                canvas.width = window.innerWidth;
+                canvas.height = 380;
+            } else {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         // 🔒 1. THE SOVEREIGN 308256 PASS-KEY AUTHENTICATION ENGINE
         loginBtn.addEventListener('click', executeGateKeyCheck);
@@ -517,9 +532,8 @@
         // ⏱️ 2. THE HIGH-VALUE TIMELINE STOPWATCH ENGINE
         timerControlBtn.addEventListener('click', () => {
             if (!isSessionActive) {
-                taskModal.classList.add('active'); // Open focus subject selection picker
+                taskModal.classList.add('active'); 
             } else {
-                // User clicked "Stop" -> Trigger Interruption Workflow Matrix
                 clearInterval(timerInterval);
                 pauseModal.classList.add('active'); 
             }
@@ -576,7 +590,6 @@
             logSqlQuery('STUDY_INTERRUPTED', hoursEarned, `${currentActiveTask}' AND status='Interrupted' AND reason='${reason}`);
             updateSovereigntyStatus();
         }
-
         // 📊 SIMULATED SQL TABLE INSERT ENGINE
         function logSqlQuery(action, value, detail = '') {
             const timestamp = new Date().toLocaleTimeString();
@@ -623,9 +636,10 @@
                 visualizerToggleBtn.innerText = 'Pause Engine';
                 visualizerToggleBtn.style.borderColor = '#d4af37';
                 visualizerToggleBtn.style.color = '#d4af37';
-                if (analyser) renderMatrixAnimation(); // Restart render engine loop
+                if (analyser) renderMatrixAnimation(); 
             }
         });
+
         // ⏺️ 4. THE HTML5 MEDIARECORDER AUDIO CAPTURE NEXUS
         recordBtn.addEventListener('click', async () => {
             if (!isRecording) {
@@ -698,7 +712,6 @@
                 feedbackBox.innerHTML = `🌌 <strong>SOVEREIGN ASCENSION:</strong> ${studyHours.toFixed(4)} Hrs! Absolute mastery achieved. You have built pure value out of empty time today, Bismark. Legendary execution!`;
             }
         }
-
         // 📊 RAW DATA EXPORT MATRIX ENGINE
         document.getElementById('export-btn').addEventListener('click', () => {
             if (accountabilityLedger.length === 0) {
@@ -735,6 +748,27 @@
             document.body.removeChild(tempBox);
             alert("🚀 LEDGER TRANSMISSION ARCHIVE COPIED! Paste (Ctrl+V) directly into our chat loop!");
         });
+
+        // 🪐 UNIFIED HARDWARE INITIALIZATION HUB
+        async function initializeAudioNexus() {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                source = audioCtx.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256; 
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                
+                startBtn.style.display = 'none';
+                renderMatrixAnimation();
+            } catch (err) {
+                alert("Audio Nexus Connection Failed: Please verify microphone permissions.");
+                console.error("Audio Nexus Connection Failed:", err);
+            }
+        }
+
         function renderMatrixAnimation() {
             if (!analyser || isVisualizerPaused) return;
             requestAnimationFrame(renderMatrixAnimation);
@@ -818,7 +852,7 @@
             }
         }
 
-                // 🚀 THE MISSING MASTER CONNECTION ENGINE LINE
+        // 🚀 MASTER CLICK BINDING BEYOND THE ENGINE LOOP
         startBtn.addEventListener('click', initializeAudioNexus);
     </script>
 </body>
