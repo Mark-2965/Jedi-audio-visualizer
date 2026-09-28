@@ -19,14 +19,19 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        #visualizer-canvas {
+        #canvas-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #111a2e 0%, #050811 100%);
             z-index: 1;
+        }
+        #visualizer-canvas {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #111a2e 0%, #050811 100%);
+            display: block;
         }
         /* 🌌 LEFT FLANK PANEL DESKTOP METRICS */
         #left-sidebar {
@@ -137,31 +142,39 @@
             border-left: 2px solid #d4af37;
             padding-left: 6px;
         }
-        /* 📱 ⚡ RESPONSIVE RULES FOR SMARTPHONES */
+        /* 📱 ⚡ MASTER RESPONSIVE VERTICAL SCROLL STACKING EQUATION */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto;
+                display: block; /* Changes from flex to layout block flow */
+            }
+            #canvas-container {
+                position: relative;
+                width: 100%;
+                height: 380px; /* Locks visualizer box flow between tables */
+                margin: 20px 0;
+                order: 2;
             }
             #left-sidebar {
                 position: relative;
                 top: 0;
                 left: 0;
                 width: calc(100% - 30px);
-                margin: 15px auto;
-                background: rgba(10, 15, 29, 0.9);
-                z-index: 10;
+                margin: 20px auto;
+                background: rgba(10, 15, 29, 0.95);
+                order: 1; /* Appears first at the top */
             }
             #right-sidebar {
                 position: relative;
                 top: 0;
                 right: 0;
                 width: calc(100% - 30px);
-                margin: 15px auto;
-                background: rgba(10, 15, 29, 0.9);
-                z-index: 10;
+                margin: 20px auto 40px auto;
+                background: rgba(10, 15, 29, 0.95);
+                order: 3; /* Appears at the bottom below circle */
             }
             #sql-terminal {
-                height: 160px;
+                height: 180px;
             }
             #controls {
                 position: relative !important;
@@ -169,14 +182,15 @@
                 left: 0 !important;
                 transform: none !important;
                 text-align: center;
-                margin: 20px auto 40px auto;
+                margin: 10px auto 20px auto;
                 width: 100%;
+                order: 4;
             }
             .btn-main {
-                width: 80%;
+                width: 85%;
             }
         }
-        /* 🛰️ ACCOUNTABILITY MODAL POPUP */
+        /* 🛰️ ACCOUNTABILITY MODAL OVERLAY ELEMENTS */
         #modal-overlay {
             position: absolute;
             top: 0;
@@ -261,6 +275,7 @@
 </head>
 <body>
 
+    <!-- 🛰️ DYNAMIC TASK FOCUS SELECTION POPUP -->
     <div id="modal-overlay">
         <div id="modal-box">
             <div class="modal-title">Select Active Focus Node</div>
@@ -276,8 +291,10 @@
         </div>
     </div>
 
+    <!-- 🪐 LEFT SIDEBAR: METRICS AND ACTION CONTROLS -->
     <div id="left-sidebar">
         <h2>System Telemetry</h2>
+        
         <div class="metric-card">
             <div>
                 <div class="metric-label">Study Session</div>
@@ -285,18 +302,22 @@
             </div>
             <div class="metric-value" id="study-val">0.0 Hrs</div>
         </div>
+
         <div class="metric-card">
             <div>
                 <div class="metric-label">Vape Puff Log</div>
                 <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" id="vape-btn">Log Puff</button>
             </div>
-            <div class="metric-value" style="color:#ff4a4a;" id="vape-val">0</div>
+            <div class="metric-value" style="color:#ff4a4a;" id="vape-val">5</div>
         </div>
+
         <h2>Sovereignty Matrix</h2>
         <div id="feedback-box">🛡️ Core initialized. Booting focus stream...</div>
+
         <button class="btn-main" style="width:100%; padding:12px; font-size:11px; border-radius:8px;" id="export-btn">📊 Export Ledger Data</button>
     </div>
 
+    <!-- 📊 RIGHT SIDEBAR: SPLIT-SCREEN LOG STREAM -->
     <div id="right-sidebar">
         <h2 class="green-header">Live SQL Query Stream</h2>
         <div id="sql-terminal">
@@ -304,7 +325,10 @@
         </div>
     </div>
 
-    <canvas id="visualizer-canvas"></canvas>
+    <!-- 🪐 STRUCTURAL ENCLOSURE BLOCK FOR CANVAS SCROLLING FLOW -->
+    <div id="canvas-container">
+        <canvas id="visualizer-canvas"></canvas>
+    </div>
 
     <div id="controls">
         <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
@@ -320,7 +344,7 @@
 
         // Dynamic State Metrics
         let studyHours = 0.0;
-        let vapePuffs = 5; // ⚡ Hardcoded baseline tracking to preserve your 5-puff victory history!
+        let vapePuffs = 5; // ⚡ Preserving your 5-puff victory milestone in memory!
         let rotationAngle = 0;
         
         // Comprehensive Ledger Database Array for Accountability Reports
@@ -331,12 +355,19 @@
         let dataArray = null;
         let source = null;
 
-        // Initialize display to synchronize with your current state metrics
+        // Synchronize interface view on load
         document.getElementById('vape-val').innerText = vapePuffs;
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            // Adaptive scaling boundary mapping
+            const container = document.getElementById('canvas-container');
+            if (window.innerWidth < 768) {
+                canvas.width = window.innerWidth;
+                canvas.height = 380;
+            } else {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
@@ -361,7 +392,7 @@
             sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
         }
 
-        // 🛡️ DYNAMIC PREMIUM VALIDATION MATRIX GENERATOR
+        // 🛡️ DYNAMIC DEDICATED SOVEREIGN VERIFICATION ENGINE
         function updateSovereigntyStatus() {
             if (studyHours === 0) {
                 feedbackBox.style.color = '#8ca3ba';
@@ -502,9 +533,9 @@
             for(let i = 0; i < 15; i++) bassSum += dataArray[i];
             let bassAverage = bassSum / 15;
             
-            // 📱 DYNAMIC MOBILE RADIUS SCALING: Scale ring down to 50px if on small viewports
+            // 📱 RESPONSIVE CALCULATIONS FOR TRUE LAYOUT HEIGHT FLOW
             const isMobile = window.innerWidth < 768;
-            let pulseRadius = (isMobile ? 50 : 100) + (bassAverage * 0.3);
+            let pulseRadius = (isMobile ? 45 : 100) + (bassAverage * 0.3);
             
             ctx.shadowBlur = (isMobile ? 15 : 40) + (bassAverage * 0.4);
             ctx.shadowColor = 'rgba(0, 255, 135, 0.8)';
@@ -528,7 +559,7 @@
             for (let i = 0; i < totalBars; i++) {
                 const dataIndex = Math.floor((i / totalBars) * bufferLength);
                 const audioValue = dataArray[dataIndex];
-                const barHeight = (audioValue / 255) * (isMobile ? 60 : 150); 
+                const barHeight = (audioValue / 255) * (isMobile ? 50 : 150); 
                 
                 const angle = (i / totalBars) * Math.PI * 2;
                 const startX = centerX + Math.cos(angle) * maxRadius;
@@ -551,9 +582,9 @@
             rotationAngle += 0.002; 
             const textString = " JEDI AUDIO HORIZON MATRIX • SYSTEM ONLINE • SYSTEM ONLINE •";
             
-            // 📱 ADAPTIVE TEXT BOUNDARY: Pull font scale down on mobile screens
-            const orbitDistance = maxRadius + (isMobile ? 55 : 110); 
-            ctx.font = isMobile ? "bold 11px 'Segoe UI', sans-serif" : "bold 24px 'Segoe UI', sans-serif";
+            // 📱 SCALED MOBILE TEXT ELEMENT RADIAL BOUNDS
+            const orbitDistance = maxRadius + (isMobile ? 45 : 110); 
+            ctx.font = isMobile ? "bold 10px 'Segoe UI', sans-serif" : "bold 24px 'Segoe UI', sans-serif";
             ctx.fillStyle = "rgba(212, 175, 55, 0.9)"; 
             
             const totalTextAngle = Math.PI * 2; 
