@@ -19,6 +19,73 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        
+        /* 🔒 MASTER CYBERPUNK SECURITY LOCK GATE INITIALIZATION */
+        #login-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050811;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        .login-box {
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(20px);
+            border: 2px solid #d4af37;
+            border-radius: 16px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.15);
+        }
+        .login-title {
+            color: #d4af37;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+        .login-input {
+            width: 100%;
+            background: #050811;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 8px;
+            padding: 14px;
+            color: #00ff87;
+            font-size: 20px;
+            letter-spacing: 6px;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            font-family: monospace;
+        }
+        .login-input:focus {
+            border-color: #00ff87;
+            box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
+        }
+        
+        /* 🌌 CORE ENVIRONMENT APPLICATION WRAPPER */
+        #app-workspace {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #app-workspace.unlocked {
+            opacity: 1;
+            pointer-events: auto;
+        }
         #canvas-container {
             position: absolute;
             top: 0;
@@ -33,7 +100,8 @@
             background: radial-gradient(circle at center, #111a2e 0%, #050811 100%);
             display: block;
         }
-        /* 🌌 LEFT FLANK PANEL DESKTOP METRICS */
+        
+        /* 🕹️ DESKTOP CONSOLE SIDEBAR POSITIONING */
         #left-sidebar {
             position: absolute;
             top: 20px;
@@ -46,9 +114,7 @@
             padding: 22px;
             z-index: 10;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
         }
-        /* 📊 RIGHT FLANK PANEL DESKTOP SQL STREAM */
         #right-sidebar {
             position: absolute;
             top: 20px;
@@ -61,7 +127,12 @@
             padding: 22px;
             z-index: 10;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
+        }
+        
+        @keyframes pulseGlow {
+            0% { opacity: 0.7; text-shadow: 0 0 5px rgba(212,175,55,0.2); }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(212,175,55,0.6); }
+            100% { opacity: 0.7; text-shadow: 0 0 5px rgba(212,175,55,0.2); }
         }
         h2 {
             color: #d4af37;
@@ -114,6 +185,16 @@
             background: #d4af37;
             color: #050811;
         }
+        .btn-record {
+            background: rgba(255, 74, 74, 0.15);
+            border: 1px solid #ff4a4a;
+            color: #ff4a4a;
+        }
+        .btn-record.recording {
+            background: #ff4a4a;
+            color: #050811;
+            animation: recordPulse 1.5s infinite;
+        }
         #feedback-box {
             background: rgba(0, 255, 135, 0.05);
             border: 1px dashed rgba(0, 255, 135, 0.3);
@@ -142,36 +223,27 @@
             border-left: 2px solid #d4af37;
             padding-left: 6px;
         }
-        /* 📱 ⚡ MASTER RESPONSIVE VERTICAL SCROLL STACKING EQUATION */
+        
+        /* 📱 VERTICAL SCROLL STACKING SYSTEM FOR MOBILE */
         @media (max-width: 768px) {
-            body {
+            #app-workspace {
                 overflow-y: auto;
-                display: block; /* Changes from flex to layout block flow */
+                display: block;
             }
             #canvas-container {
                 position: relative;
                 width: 100%;
-                height: 380px; /* Locks visualizer box flow between tables */
+                height: 380px;
                 margin: 20px 0;
-                order: 2;
             }
-            #left-sidebar {
+            #left-sidebar, #right-sidebar {
                 position: relative;
                 top: 0;
                 left: 0;
+                right: 0;
                 width: calc(100% - 30px);
                 margin: 20px auto;
                 background: rgba(10, 15, 29, 0.95);
-                order: 1; /* Appears first at the top */
-            }
-            #right-sidebar {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: calc(100% - 30px);
-                margin: 20px auto 40px auto;
-                background: rgba(10, 15, 29, 0.95);
-                order: 3; /* Appears at the bottom below circle */
             }
             #sql-terminal {
                 height: 180px;
@@ -182,23 +254,23 @@
                 left: 0 !important;
                 transform: none !important;
                 text-align: center;
-                margin: 10px auto 20px auto;
+                margin: 10px auto 30px auto;
                 width: 100%;
-                order: 4;
             }
             .btn-main {
                 width: 85%;
             }
         }
-        /* 🛰️ ACCOUNTABILITY MODAL OVERLAY ELEMENTS */
-        #modal-overlay {
-            position: absolute;
+        
+        /* 🛰️ ACCOUNTABILITY MODAL SYSTEM COMPONENTS */
+        .modal-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 8, 17, 0.85);
-            z-index: 100;
+            background: rgba(5, 8, 17, 0.9);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -206,11 +278,11 @@
             pointer-events: none;
             transition: all 0.3s ease;
         }
-        #modal-overlay.active {
+        .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
-        #modal-box {
+        .modal-box {
             background: #0a0f1d;
             border: 2px solid #d4af37;
             border-radius: 16px;
@@ -271,67 +343,107 @@
             cursor: pointer;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
         }
+        @keyframes recordPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 74, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0); }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🛰️ DYNAMIC TASK FOCUS SELECTION POPUP -->
-    <div id="modal-overlay">
-        <div id="modal-box">
+    <!-- 🔒 308256 MASTER KEY SECURITY LOCK SCREEN -->
+    <div id="login-gate">
+        <div class="login-box">
+            <div class="login-title" id="login-msg">Sovereignty Core Locked: Enter Credentials</div>
+            <input type="password" class="login-input" id="pass-input" placeholder="••••••" maxlength="6">
+            <button class="btn-main" style="position:static; transform:none; width:100%;" id="login-btn">Unlock Core</button>
+        </div>
+    </div>
+
+    <!-- 🛠️ INTERRUPTION SELECTOR MODAL COMPONENT -->
+    <div class="modal-overlay" id="pause-modal">
+        <div class="modal-box">
+            <div class="modal-title">Select Interruption Vector Node</div>
+            <div class="select-btn-grid">
+                <button class="btn-select" onclick="submitPauseReason('Short Break')">💻 Short Break</button>
+                <button class="btn-select" onclick="submitPauseReason('Nap/Rest')">💤 Nap/Rest</button>
+                <button class="btn-select" onclick="submitPauseReason('Food/Meal')">🍗 Food/Meal</button>
+                <button class="btn-select" onclick="submitPauseReason('Other')">🌀 Other</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🛰️ SYSTEM TARGET TASK NODE MODAL -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-box">
             <div class="modal-title">Select Active Focus Node</div>
             <div class="select-btn-grid">
-                <button class="btn-select" onclick="submitBlock('Code')">💻 Code</button>
-                <button class="btn-select" onclick="submitBlock('Build')">🛠️ Build</button>
-                <button class="btn-select" onclick="submitBlock('SQL')">📊 SQL</button>
-                <button class="btn-select" onclick="submitBlock('PowerBI')">📈 PowerBI</button>
-                <button class="btn-select" onclick="submitBlock('Excel')">📉 Excel</button>
-                <button class="btn-select" onclick="submitBlock('Other')">🌀 Other</button>
+                <button class="btn-select" onclick="startActiveSession('Code')">💻 Code</button>
+                <button class="btn-select" onclick="startActiveSession('Build')">🛠️ Build</button>
+                <button class="btn-select" onclick="startActiveSession('SQL')">📊 SQL</button>
+                <button class="btn-select" onclick="startActiveSession('PowerBI')">📈 PowerBI</button>
+                <button class="btn-select" onclick="startActiveSession('Excel')">📉 Excel</button>
+                <button class="btn-select" onclick="startActiveSession('Other')">🌀 Other</button>
             </div>
-            <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" onclick="closeModal()">Cancel</button>
+            <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" onclick="closeTaskModal()">Cancel</button>
         </div>
     </div>
 
-    <!-- 🪐 LEFT SIDEBAR: METRICS AND ACTION CONTROLS -->
-    <div id="left-sidebar">
-        <h2>System Telemetry</h2>
+    <!-- 🌌 APPLICATION VIEWPORT BOUNDARY RUNTIME -->
+    <div id="app-workspace">
         
-        <div class="metric-card">
-            <div>
-                <div class="metric-label">Study Session</div>
-                <button class="btn-action" id="study-btn">+30 Mins</button>
+        <!-- 🪐 LEFT SIDEBAR METRICS MANAGEMENT PANEL -->
+        <div id="left-sidebar">
+            <h2>System Telemetry</h2>
+            
+            <div class="metric-card">
+                <div>
+                    <div class="metric-label" id="timer-label">Session Idle</div>
+                    <button class="btn-action" id="timer-control-btn">Start</button>
+                </div>
+                <div class="metric-value" id="study-val">00:00</div>
             </div>
-            <div class="metric-value" id="study-val">0.0 Hrs</div>
-        </div>
 
-        <div class="metric-card">
-            <div>
-                <div class="metric-label">Vape Puff Log</div>
-                <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" id="vape-btn">Log Puff</button>
+            <div class="metric-card">
+                <div>
+                    <div class="metric-label">Vape Puff Log</div>
+                    <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" id="vape-btn">Log Puff</button>
+                </div>
+                <div class="metric-value" style="color:#ff4a4a;" id="vape-val">5</div>
             </div>
-            <div class="metric-value" style="color:#ff4a4a;" id="vape-val">5</div>
+
+            <h2>Interface Control Matrix</h2>
+            <div class="metric-card" style="margin-bottom:12px;">
+                <span class="metric-label">Audio Matrix Stream</span>
+                <button class="btn-action" id="visualizer-toggle-btn">Pause Engine</button>
+            </div>
+            <div class="metric-card" style="margin-bottom:12px;">
+                <span class="metric-label">Audio Nexus Capture</span>
+                <button class="btn-action btn-record" id="record-btn">⏺ Record</button>
+            </div>
+
+            <h2>Sovereignty Matrix</h2>
+            <div id="feedback-box">🛡️ Core initialized. Booting focus stream...</div>
+
+            <button class="btn-main" style="width:100%; padding:12px; font-size:11px; border-radius:8px;" id="export-btn">📊 Export Ledger Data</button>
         </div>
 
-        <h2>Sovereignty Matrix</h2>
-        <div id="feedback-box">🛡️ Core initialized. Booting focus stream...</div>
-
-        <button class="btn-main" style="width:100%; padding:12px; font-size:11px; border-radius:8px;" id="export-btn">📊 Export Ledger Data</button>
-    </div>
-
-    <!-- 📊 RIGHT SIDEBAR: SPLIT-SCREEN LOG STREAM -->
-    <div id="right-sidebar">
-        <h2 class="green-header">Live SQL Query Stream</h2>
-        <div id="sql-terminal">
-            <div class="sql-row" id="placeholder-row" style="color: #8ca3ba;">-- Awaiting database inserts...</div>
+        <div id="right-sidebar">
+            <h2 class="green-header">Live SQL Query Stream</h2>
+            <div id="sql-terminal">
+                <div class="sql-row" id="placeholder-row" style="color: #8ca3ba;">-- Awaiting database inserts...</div>
+            </div>
         </div>
-    </div>
 
-    <!-- 🪐 STRUCTURAL ENCLOSURE BLOCK FOR CANVAS SCROLLING FLOW -->
-    <div id="canvas-container">
-        <canvas id="visualizer-canvas"></canvas>
-    </div>
+        <!-- 🪐 STRUCTURAL ENCLOSURE BLOCK FOR CANVAS SCROLLING FLOW -->
+        <div id="canvas-container">
+            <canvas id="visualizer-canvas"></canvas>
+        </div>
 
-    <div id="controls">
-        <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
+        <div id="controls">
+            <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
+        </div>
     </div>
     <script>
         const canvas = document.getElementById('visualizer-canvas');
@@ -339,38 +451,131 @@
         const startBtn = document.getElementById('start-btn');
         const sqlTerminal = document.getElementById('sql-terminal');
         const placeholderRow = document.getElementById('placeholder-row');
-        const modalOverlay = document.getElementById('modal-overlay');
+        const loginGate = document.getElementById('login-gate');
+        const passInput = document.getElementById('pass-input');
+        const loginBtn = document.getElementById('login-btn');
+        const loginMsg = document.getElementById('login-msg');
+        const appWorkspace = document.getElementById('app-workspace');
+        const pauseModal = document.getElementById('pause-modal');
+        const taskModal = document.getElementById('task-modal');
         const feedbackBox = document.getElementById('feedback-box');
+        const timerControlBtn = document.getElementById('timer-control-btn');
+        const timerLabel = document.getElementById('timer-label');
+        const studyVal = document.getElementById('study-val');
+        const visualizerToggleBtn = document.getElementById('visualizer-toggle-btn');
+        const recordBtn = document.getElementById('record-btn');
 
         // Dynamic State Metrics
         let studyHours = 0.0;
-        let vapePuffs = 5; // ⚡ Preserving your 5-puff victory milestone in memory!
+        let vapePuffs = 5; // Preserved baseline tracking
         let rotationAngle = 0;
-        
-        // Comprehensive Ledger Database Array for Accountability Reports
         let accountabilityLedger = [];
 
+        // Advanced Timer State Variables
+        let timerInterval = null;
+        let totalSecondsElapsed = 0;
+        let isSessionActive = false;
+        let currentActiveTask = '';
+
+        // Audio System State Toggles
         let audioCtx = null;
         let analyser = null;
         let dataArray = null;
         let source = null;
+        let isVisualizerPaused = false;
 
-        // Synchronize interface view on load
-        document.getElementById('vape-val').innerText = vapePuffs;
+        // Microphone Media Recording Objects
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
 
-        function resizeCanvas() {
-            // Adaptive scaling boundary mapping
-            const container = document.getElementById('canvas-container');
-            if (window.innerWidth < 768) {
-                canvas.width = window.innerWidth;
-                canvas.height = 380;
+        // 🔒 1. THE SOVEREIGN 308256 PASS-KEY AUTHENTICATION ENGINE
+        loginBtn.addEventListener('click', executeGateKeyCheck);
+        passInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeGateKeyCheck();
+        });
+
+        function executeGateKeyCheck() {
+            if (passInput.value === '308256') {
+                loginGate.style.opacity = '0';
+                setTimeout(() => {
+                    loginGate.style.display = 'none';
+                    appWorkspace.classList.add('unlocked');
+                    updateSovereigntyStatus();
+                }, 500);
             } else {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                loginMsg.innerText = "❌ ACCESS DENIED: INVALID KEY NODE";
+                loginMsg.style.color = '#ff4a4a';
+                passInput.value = '';
+                setTimeout(() => {
+                    loginMsg.innerText = "Sovereignty Core Locked: Enter Credentials";
+                    loginMsg.style.color = '#d4af37';
+                }, 2000);
             }
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+
+        // ⏱️ 2. THE HIGH-VALUE TIMELINE STOPWATCH ENGINE
+        timerControlBtn.addEventListener('click', () => {
+            if (!isSessionActive) {
+                taskModal.classList.add('active'); // Open focus subject selection picker
+            } else {
+                // User clicked "Stop" -> Trigger Interruption Workflow Matrix
+                clearInterval(timerInterval);
+                pauseModal.classList.add('active'); 
+            }
+        });
+
+        function closeTaskModal() {
+            taskModal.classList.remove('active');
+        }
+
+        function startActiveSession(category) {
+            currentActiveTask = category;
+            isSessionActive = true;
+            taskModal.classList.remove('active');
+            
+            timerControlBtn.innerText = 'Stop';
+            timerControlBtn.style.borderColor = '#ff4a4a';
+            timerControlBtn.style.color = '#ff4a4a';
+            timerLabel.innerText = `Focus Node: ${category}`;
+            
+            totalSecondsElapsed = 0;
+            timerInterval = setInterval(() => {
+                totalSecondsElapsed++;
+                const mins = Math.floor(totalSecondsElapsed / 60).toString().padStart(2, '0');
+                const secs = (totalSecondsElapsed % 60).toString().padStart(2, '0');
+                studyVal.innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function submitPauseReason(reason) {
+            pauseModal.classList.remove('active');
+            isSessionActive = false;
+            
+            timerControlBtn.innerText = 'Start';
+            timerControlBtn.style.borderColor = '#d4af37';
+            timerControlBtn.style.color = '#d4af37';
+            timerLabel.innerText = 'Session Idle';
+            
+            const hoursEarned = totalSecondsElapsed / 3600;
+            studyHours += hoursEarned;
+            studyVal.innerText = "00:00";
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            accountabilityLedger.push({
+                type: 'PRODUCTIVITY',
+                timestamp: timestamp,
+                node: currentActiveTask,
+                duration: `${Math.floor(totalSecondsElapsed / 60)}m ${totalSecondsElapsed % 60}s`,
+                status: 'Interrupted',
+                interruption_vector: reason,
+                total_hours_running: studyHours
+            });
+            
+            logSqlQuery('STUDY_INTERRUPTED', hoursEarned, `${currentActiveTask}' AND status='Interrupted' AND reason='${reason}`);
+            updateSovereigntyStatus();
+        }
 
         // 📊 SIMULATED SQL TABLE INSERT ENGINE
         function logSqlQuery(action, value, detail = '') {
@@ -378,77 +583,23 @@
             const logRow = document.createElement('div');
             logRow.className = 'sql-row';
             
-            if(action === 'VAPE') {
+            if (action === 'VAPE') {
                 logRow.innerHTML = `<span style="color:#ff4a4a;">[${timestamp}]</span> INSERT INTO health_ledger (puff_count, limit_max) VALUES (${value}, 14);`;
+            } else if (action === 'STUDY_INTERRUPTED') {
+                logRow.innerHTML = `<span style="color:#ff4a4a;">[${timestamp}]</span> UPDATE productivity SET hours_logged = hours_logged + ${value.toFixed(4)} WHERE task = '${detail}';`;
             } else {
-                logRow.innerHTML = `<span style="color:#00ff87;">[${timestamp}]</span> UPDATE productivity SET hours_logged = ${value.toFixed(1)} WHERE task = '${detail}';`;
+                logRow.innerHTML = `<span style="color:#00ff87;">[${timestamp}]</span> UPDATE productivity SET hours_logged = ${value.toFixed(4)} WHERE task = '${detail}';`;
             }
             
-            if (placeholderRow) {
-                placeholderRow.style.display = 'none';
-            }
-            
+            if (placeholderRow) placeholderRow.style.display = 'none';
             sqlTerminal.appendChild(logRow);
             sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
         }
 
-        // 🛡️ DYNAMIC DEDICATED SOVEREIGN VERIFICATION ENGINE
-        function updateSovereigntyStatus() {
-            if (studyHours === 0) {
-                feedbackBox.style.color = '#8ca3ba';
-                feedbackBox.style.borderColor = 'rgba(140, 163, 186, 0.3)';
-                feedbackBox.innerHTML = "🛡️ Core initialized. Booting focus stream...";
-                return;
-            }
-
-            if (studyHours > 0 && studyHours < 2.0) {
-                feedbackBox.style.color = '#d4af37';
-                feedbackBox.style.borderColor = 'rgba(212, 175, 55, 0.5)';
-                feedbackBox.innerHTML = `⚡ <strong>WARRIOR FUEL:</strong> ${studyHours.toFixed(1)} Hrs logged. You are actively laying down structural bricks right now. Keep your head down and stay inside the arena!`;
-            } else if (studyHours >= 2.0 && studyHours < 4.0) {
-                feedbackBox.style.color = '#00ff87';
-                feedbackBox.style.borderColor = 'rgba(0, 255, 135, 0.5)';
-                feedbackBox.innerHTML = `🏆 <strong>ELITE PROGRESS:</strong> ${studyHours.toFixed(1)} Hrs completed! Your discipline matrix is outperforming the average standard. Keep pushing!`;
-            } else {
-                feedbackBox.style.color = '#00ffff';
-                feedbackBox.style.borderColor = 'rgba(0, 255, 255, 0.5)';
-                feedbackBox.innerHTML = `🌌 <strong>SOVEREIGN ASCENSION:</strong> ${studyHours.toFixed(1)} Hrs! Absolute mastery achieved. You have built pure value out of empty time today, Bismark. Legendary execution!`;
-            }
-        }
-
-        // MODAL VIEW CONTROLS
-        document.getElementById('study-btn').addEventListener('click', () => {
-            modalOverlay.classList.add('active');
-        });
-
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-        }
-
-        function submitBlock(category) {
-            studyHours += 0.5;
-            document.getElementById('study-val').innerText = `${studyHours.toFixed(1)} Hrs`;
-            
-            const timestamp = new Date().toLocaleTimeString();
-            
-            accountabilityLedger.push({
-                type: 'PRODUCTIVITY',
-                timestamp: timestamp,
-                node: category,
-                duration: '30 Mins',
-                total_hours_running: studyHours
-            });
-            
-            logSqlQuery('STUDY', studyHours, category);
-            updateSovereigntyStatus();
-            closeModal();
-        }
-
-        // Vape Trigger Node
+        // Vape Telemetry Trigger Node
         document.getElementById('vape-btn').addEventListener('click', () => {
             vapePuffs += 1;
             document.getElementById('vape-val').innerText = vapePuffs;
-            
             const timestamp = new Date().toLocaleTimeString();
             
             accountabilityLedger.push({
@@ -458,34 +609,121 @@
                 current_total: vapePuffs,
                 safety_ceiling: 14
             });
-            
             logSqlQuery('VAPE', vapePuffs);
         });
+
+        // ⏸️ 3. AUDIO VISUALIZER FREEZE TOGGLE NODE
+        visualizerToggleBtn.addEventListener('click', () => {
+            isVisualizerPaused = !isVisualizerPaused;
+            if (isVisualizerPaused) {
+                visualizerToggleBtn.innerText = 'Resume Engine';
+                visualizerToggleBtn.style.borderColor = '#00ff87';
+                visualizerToggleBtn.style.color = '#00ff87';
+            } else {
+                visualizerToggleBtn.innerText = 'Pause Engine';
+                visualizerToggleBtn.style.borderColor = '#d4af37';
+                visualizerToggleBtn.style.color = '#d4af37';
+                if (analyser) renderMatrixAnimation(); // Restart render engine loop
+            }
+        });
+        // ⏺️ 4. THE HTML5 MEDIARECORDER AUDIO CAPTURE NEXUS
+        recordBtn.addEventListener('click', async () => {
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.addEventListener('dataavailable', event => {
+                        audioChunks.push(event.data);
+                    });
+                    
+                    mediaRecorder.addEventListener('stop', () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const timestamp = new Date().toLocaleTimeString();
+                        
+                        accountabilityLedger.push({
+                            type: 'AUDIO_LOG',
+                            timestamp: timestamp,
+                            action: 'VOICE_MEMO_ATTACHED',
+                            size_bytes: audioBlob.size
+                        });
+                        
+                        const logRow = document.createElement('div');
+                        logRow.className = 'sql-row';
+                        logRow.style.borderLeftColor = '#00ffff';
+                        logRow.innerHTML = `<span style="color:#00ffff;">[${timestamp}]</span> INSERT INTO audit_logs (event, binary_size) VALUES ('AUDIO_ATTACHED', ${audioBlob.size});`;
+                        sqlTerminal.appendChild(logRow);
+                        sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
+                    });
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordBtn.innerText = '⏹ Stop Rec';
+                    recordBtn.classList.add('recording');
+                } catch (err) {
+                    alert("Capture Error: Secure microphone permission matrix failed.");
+                    console.error(err);
+                }
+            } else {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                }
+                isRecording = false;
+                recordBtn.innerText = '⏺ Record';
+                recordBtn.classList.remove('recording');
+            }
+        });
+
+        // 🛡️ DYNAMIC SOVEREIGN MATRIX STATE CARD
+        function updateSovereigntyStatus() {
+            if (studyHours === 0) {
+                feedbackBox.style.color = '#8ca3ba';
+                feedbackBox.style.borderColor = 'rgba(140, 163, 186, 0.3)';
+                feedbackBox.innerHTML = "🛡️ Core initialized. Booting focus stream...";
+                return;
+            }
+            if (studyHours > 0 && studyHours < 2.0) {
+                feedbackBox.style.color = '#d4af37';
+                feedbackBox.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+                feedbackBox.innerHTML = `⚡ <strong>WARRIOR FUEL:</strong> ${studyHours.toFixed(4)} Hrs logged. You are actively laying down structural bricks right now. Keep your head down and stay inside the arena!`;
+            } else if (studyHours >= 2.0 && studyHours < 4.0) {
+                feedbackBox.style.color = '#00ff87';
+                feedbackBox.style.borderColor = 'rgba(0, 255, 135, 0.5)';
+                feedbackBox.innerHTML = `🏆 <strong>ELITE PROGRESS:</strong> ${studyHours.toFixed(4)} Hrs completed! Your discipline matrix is outperforming the average standard. Keep pushing!`;
+            } else {
+                feedbackBox.style.color = '#00ffff';
+                feedbackBox.style.borderColor = 'rgba(0, 255, 255, 0.5)';
+                feedbackBox.innerHTML = `🌌 <strong>SOVEREIGN ASCENSION:</strong> ${studyHours.toFixed(4)} Hrs! Absolute mastery achieved. You have built pure value out of empty time today, Bismark. Legendary execution!`;
+            }
+        }
+
         // 📊 RAW DATA EXPORT MATRIX ENGINE
         document.getElementById('export-btn').addEventListener('click', () => {
             if (accountabilityLedger.length === 0) {
-                alert("Ledger data pipeline empty. Log focus hours or vape telemetry first!");
+                alert("Ledger data pipeline empty. Log session hours, audio records, or vape telemetry first!");
                 return;
             }
-            
             const dateStr = new Date().toLocaleDateString();
             let summaryText = `====================================\n`;
             summaryText += `👑 Bismark's Masculine Accountability Ledger 👑\n`;
             summaryText += `📅 Date Vector: ${dateStr}\n`;
             summaryText += `====================================\n`;
-            summaryText += `📊 TOTAL STUDY DURATION: ${studyHours.toFixed(1)} Hrs\n`;
+            summaryText += `📊 TOTAL STUDY DURATION: ${studyHours.toFixed(4)} Hrs\n`;
             summaryText += `🚭 TOTAL VAPE PUFFS: ${vapePuffs} / 14 Max\n`;
             summaryText += `------------------------------------\n`;
             summaryText += `📝 RAW DATA TRANSACTION PATHS:\n`;
             
             accountabilityLedger.forEach((entry, idx) => {
                 if (entry.type === 'PRODUCTIVITY') {
-                    summaryText += `  [${idx + 1}] [${entry.timestamp}] FOCUS INSIGHT -> Node: ${entry.node} | Block: ${entry.duration} | Total: ${entry.total_hours_running.toFixed(1)} Hrs\n`;
+                    summaryText += `  [${idx + 1}] [${entry.timestamp}] FOCUS INSIGHT -> Node: ${entry.node} | Duration: ${entry.duration} | Status: ${entry.status} | Reason: ${entry.interruption_vector} | Total: ${entry.total_hours_running.toFixed(4)} Hrs\n`;
+                } else if (entry.type === 'AUDIO_LOG') {
+                    summaryText += `  [${idx + 1}] [${entry.timestamp}] AUDIO TRACE   -> Action: ${entry.action} | Blob Size: ${entry.size_bytes} Bytes\n`;
                 } else {
                     summaryText += `  [${idx + 1}] [${entry.timestamp}] HEALTH LOG   -> Action: ${entry.action} | Count: ${entry.current_total} | Ceiling: ${entry.safety_ceiling}\n`;
                 }
             });
-            
             summaryText += `====================================\n`;
             summaryText += `Telemetry extraction verified. Copy this block entirely and send to GEMI!`;
             
@@ -495,29 +733,10 @@
             tempBox.select();
             document.execCommand('copy');
             document.body.removeChild(tempBox);
-            
-            alert("🚀 LEDGER TRANSMISSION ARCHIVE COPIED! The entire data summary block is inside your clipboard memory. Simply paste (Ctrl+V) directly into our chat loop!");
+            alert("🚀 LEDGER TRANSMISSION ARCHIVE COPIED! Paste (Ctrl+V) directly into our chat loop!");
         });
-
-        async function initializeAudioNexus() {
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioCtx.createAnalyser();
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                source = audioCtx.createMediaStreamSource(stream);
-                source.connect(analyser);
-                analyser.fftSize = 256; 
-                const bufferLength = analyser.frequencyBinCount;
-                dataArray = new Uint8Array(bufferLength);
-                startBtn.style.display = 'none';
-                renderMatrixAnimation();
-            } catch (err) {
-                console.error("Audio Nexus Connection Failed:", err);
-            }
-        }
-
         function renderMatrixAnimation() {
-            if (!analyser) return;
+            if (!analyser || isVisualizerPaused) return;
             requestAnimationFrame(renderMatrixAnimation);
             
             analyser.getByteFrequencyData(dataArray);
@@ -533,7 +752,6 @@
             for(let i = 0; i < 15; i++) bassSum += dataArray[i];
             let bassAverage = bassSum / 15;
             
-            // 📱 RESPONSIVE CALCULATIONS FOR TRUE LAYOUT HEIGHT FLOW
             const isMobile = window.innerWidth < 768;
             let pulseRadius = (isMobile ? 45 : 100) + (bassAverage * 0.3);
             
@@ -582,7 +800,6 @@
             rotationAngle += 0.002; 
             const textString = " JEDI AUDIO HORIZON MATRIX • SYSTEM ONLINE • SYSTEM ONLINE •";
             
-            // 📱 SCALED MOBILE TEXT ELEMENT RADIAL BOUNDS
             const orbitDistance = maxRadius + (isMobile ? 45 : 110); 
             ctx.font = isMobile ? "bold 10px 'Segoe UI', sans-serif" : "bold 24px 'Segoe UI', sans-serif";
             ctx.fillStyle = "rgba(212, 175, 55, 0.9)"; 
@@ -600,8 +817,6 @@
                 ctx.restore();
             }
         }
-
-        startBtn.addEventListener('click', initializeAudioNexus);
     </script>
 </body>
 </html>
