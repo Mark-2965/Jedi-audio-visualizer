@@ -14,9 +14,10 @@
             background-color: #0a0f1d;
             color: #f4f6f8;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             display: flex;
-            height: 100vh;
+            flex-direction: column;
+            min-height: 100vh;
         }
         #visualizer-canvas {
             position: absolute;
@@ -27,7 +28,7 @@
             background: radial-gradient(circle at center, #111a2e 0%, #050811 100%);
             z-index: 1;
         }
-        /* 🌌 LEFT FLANK SIDEBAR: METRICS CONTROL PANEL */
+        /* 🌌 LEFT FLANK PANEL DESKTOP METRICS */
         #left-sidebar {
             position: absolute;
             top: 20px;
@@ -40,8 +41,9 @@
             padding: 22px;
             z-index: 10;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
         }
-        /* 📊 RIGHT FLANK SIDEBAR: THE STREAMING LEDGER BOARD */
+        /* 📊 RIGHT FLANK PANEL DESKTOP SQL STREAM */
         #right-sidebar {
             position: absolute;
             top: 20px;
@@ -54,6 +56,7 @@
             padding: 22px;
             z-index: 10;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
         }
         h2 {
             color: #d4af37;
@@ -134,6 +137,45 @@
             border-left: 2px solid #d4af37;
             padding-left: 6px;
         }
+        /* 📱 ⚡ RESPONSIVE RULES FOR SMARTPHONES */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+            }
+            #left-sidebar {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: calc(100% - 30px);
+                margin: 15px auto;
+                background: rgba(10, 15, 29, 0.9);
+                z-index: 10;
+            }
+            #right-sidebar {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: calc(100% - 30px);
+                margin: 15px auto;
+                background: rgba(10, 15, 29, 0.9);
+                z-index: 10;
+            }
+            #sql-terminal {
+                height: 160px;
+            }
+            #controls {
+                position: relative !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                transform: none !important;
+                text-align: center;
+                margin: 20px auto 40px auto;
+                width: 100%;
+            }
+            .btn-main {
+                width: 80%;
+            }
+        }
         /* 🛰️ ACCOUNTABILITY MODAL POPUP */
         #modal-overlay {
             position: absolute;
@@ -159,7 +201,8 @@
             border: 2px solid #d4af37;
             border-radius: 16px;
             padding: 30px;
-            width: 400px;
+            width: 90%;
+            max-width: 400px;
             box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
             text-align: center;
         }
@@ -218,7 +261,6 @@
 </head>
 <body>
 
-    <!-- 🛰️ DYNAMIC TASK FOCUS SELECTION POPUP -->
     <div id="modal-overlay">
         <div id="modal-box">
             <div class="modal-title">Select Active Focus Node</div>
@@ -234,10 +276,8 @@
         </div>
     </div>
 
-    <!-- 🪐 LEFT SIDEBAR: METRICS AND ACTION CONTROLS -->
     <div id="left-sidebar">
         <h2>System Telemetry</h2>
-        
         <div class="metric-card">
             <div>
                 <div class="metric-label">Study Session</div>
@@ -245,7 +285,6 @@
             </div>
             <div class="metric-value" id="study-val">0.0 Hrs</div>
         </div>
-
         <div class="metric-card">
             <div>
                 <div class="metric-label">Vape Puff Log</div>
@@ -253,14 +292,11 @@
             </div>
             <div class="metric-value" style="color:#ff4a4a;" id="vape-val">0</div>
         </div>
-
         <h2>Sovereignty Matrix</h2>
         <div id="feedback-box">🛡️ Core initialized. Booting focus stream...</div>
-
         <button class="btn-main" style="width:100%; padding:12px; font-size:11px; border-radius:8px;" id="export-btn">📊 Export Ledger Data</button>
     </div>
 
-    <!-- 📊 RIGHT SIDEBAR: SPLIT-SCREEN LOG STREAM -->
     <div id="right-sidebar">
         <h2 class="green-header">Live SQL Query Stream</h2>
         <div id="sql-terminal">
@@ -284,7 +320,7 @@
 
         // Dynamic State Metrics
         let studyHours = 0.0;
-        let vapePuffs = 0;
+        let vapePuffs = 5; // ⚡ Hardcoded baseline tracking to preserve your 5-puff victory history!
         let rotationAngle = 0;
         
         // Comprehensive Ledger Database Array for Accountability Reports
@@ -294,6 +330,9 @@
         let analyser = null;
         let dataArray = null;
         let source = null;
+
+        // Initialize display to synchronize with your current state metrics
+        document.getElementById('vape-val').innerText = vapePuffs;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -361,7 +400,6 @@
             
             const timestamp = new Date().toLocaleTimeString();
             
-            // Log entry into the local data system object
             accountabilityLedger.push({
                 type: 'PRODUCTIVITY',
                 timestamp: timestamp,
@@ -420,7 +458,6 @@
             summaryText += `====================================\n`;
             summaryText += `Telemetry extraction verified. Copy this block entirely and send to GEMI!`;
             
-            // Create a temporary textarea box to pipe copy actions directly into user computer clipboard
             const tempBox = document.createElement('textarea');
             tempBox.value = summaryText;
             document.body.appendChild(tempBox);
@@ -464,9 +501,12 @@
             let bassSum = 0;
             for(let i = 0; i < 15; i++) bassSum += dataArray[i];
             let bassAverage = bassSum / 15;
-            let pulseRadius = 100 + (bassAverage * 0.5);
             
-            ctx.shadowBlur = 40 + (bassAverage * 0.4);
+            // 📱 DYNAMIC MOBILE RADIUS SCALING: Scale ring down to 50px if on small viewports
+            const isMobile = window.innerWidth < 768;
+            let pulseRadius = (isMobile ? 50 : 100) + (bassAverage * 0.3);
+            
+            ctx.shadowBlur = (isMobile ? 15 : 40) + (bassAverage * 0.4);
             ctx.shadowColor = 'rgba(0, 255, 135, 0.8)';
             
             let gradient = ctx.createRadialGradient(centerX, centerY, 5, centerX, centerY, pulseRadius);
@@ -488,7 +528,7 @@
             for (let i = 0; i < totalBars; i++) {
                 const dataIndex = Math.floor((i / totalBars) * bufferLength);
                 const audioValue = dataArray[dataIndex];
-                const barHeight = (audioValue / 255) * 150; 
+                const barHeight = (audioValue / 255) * (isMobile ? 60 : 150); 
                 
                 const angle = (i / totalBars) * Math.PI * 2;
                 const startX = centerX + Math.cos(angle) * maxRadius;
@@ -499,7 +539,7 @@
                 const dynamicHue = (i * (360 / totalBars)) + (audioValue * 0.4); 
                 
                 ctx.strokeStyle = `hsl(${dynamicHue % 360}, 100%, 55%)`;
-                ctx.lineWidth = 4;
+                ctx.lineWidth = isMobile ? 2 : 4;
                 ctx.lineCap = 'round';
                 
                 ctx.beginPath();
@@ -510,9 +550,10 @@
 
             rotationAngle += 0.002; 
             const textString = " JEDI AUDIO HORIZON MATRIX • SYSTEM ONLINE • SYSTEM ONLINE •";
-            const orbitDistance = maxRadius + 110; 
             
-            ctx.font = "bold 24px 'Segoe UI', sans-serif";
+            // 📱 ADAPTIVE TEXT BOUNDARY: Pull font scale down on mobile screens
+            const orbitDistance = maxRadius + (isMobile ? 55 : 110); 
+            ctx.font = isMobile ? "bold 11px 'Segoe UI', sans-serif" : "bold 24px 'Segoe UI', sans-serif";
             ctx.fillStyle = "rgba(212, 175, 55, 0.9)"; 
             
             const totalTextAngle = Math.PI * 2; 
