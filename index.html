@@ -3,102 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jedi Bank - Virtual Secure Portal</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Jedi Audio Horizon Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0a0f1d;
+            color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+        #visualizer-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #111a2e 0%, #050811 100%);
+            z-index: 1;
+        }
+        /* 🌌 LEFT FLANK SIDEBAR: METRICS CONTROL PANEL */
+        #left-sidebar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 320px;
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 22px;
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        /* 📊 RIGHT FLANK SIDEBAR: THE STREAMING LEDGER BOARD */
+        #right-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 340px;
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(0, 255, 135, 0.25);
+            border-radius: 16px;
+            padding: 22px;
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        h2 {
+            color: #d4af37;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 6px;
+        }
+        h2.green-header {
+            color: #00ff87;
+            border-bottom-color: rgba(0, 255, 135, 0.2);
+        }
+        .metric-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric-label {
+            font-size: 11px;
+            color: #8ca3ba;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff87;
+        }
+        .btn-action {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+        .btn-action:hover {
+            background: #d4af37;
+            color: #050811;
+        }
+        #feedback-box {
+            background: rgba(0, 255, 135, 0.05);
+            border: 1px dashed rgba(0, 255, 135, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #00ff87;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        #sql-terminal {
+            background: #050811;
+            border: 1px solid rgba(0, 255, 135, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            height: 250px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            overflow-y: auto;
+            color: #00ff87;
+            margin-bottom: 15px;
+        }
+        .sql-row {
+            margin-bottom: 8px;
+            border-left: 2px solid #d4af37;
+            padding-left: 6px;
+        }
+        /* 🛰️ ACCOUNTABILITY MODAL POPUP */
+        #modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 17, 0.85);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        #modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #modal-box {
+            background: #0a0f1d;
+            border: 2px solid #d4af37;
+            border-radius: 16px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+        .modal-title {
+            color: #d4af37;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .select-btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-select {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #f4f6f8;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+        .btn-select:hover {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateY(-2px);
+        }
+        #controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .btn-main {
+            background: linear-gradient(135deg, #d4af37 0%, #aa841b 100%);
+            border: none;
+            color: #050811;
+            padding: 14px 32px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 🔐 STEP 1: MULTI-TENANT SECURE AUTHENTICATION GATE -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-card">
-            <div class="login-brand">
-                <div class="login-logo">🏛️</div>
-                <h2>Jedi Bank Core</h2>
-                <p>Multi-Tenant Security Gate</p>
+    <!-- 🛰️ DYNAMIC TASK FOCUS SELECTION POPUP -->
+    <div id="modal-overlay">
+        <div id="modal-box">
+            <div class="modal-title">Select Active Focus Node</div>
+            <div class="select-btn-grid">
+                <button class="btn-select" onclick="submitBlock('Code')">💻 Code</button>
+                <button class="btn-select" onclick="submitBlock('Build')">🛠️ Build</button>
+                <button class="btn-select" onclick="submitBlock('SQL')">📊 SQL</button>
+                <button class="btn-select" onclick="submitBlock('PowerBI')">📈 PowerBI</button>
+                <button class="btn-select" onclick="submitBlock('Excel')">📉 Excel</button>
+                <button class="btn-select" onclick="submitBlock('Other')">🌀 Other</button>
             </div>
+            <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- 🪐 LEFT SIDEBAR: METRICS AND ACTION CONTROLS -->
+    <div id="left-sidebar">
+        <h2>System Telemetry</h2>
+        
+        <div class="metric-card">
+            <div>
+                <div class="metric-label">Study Session</div>
+                <button class="btn-action" id="study-btn">+30 Mins</button>
+            </div>
+            <div class="metric-value" id="study-val">0.0 Hrs</div>
+        </div>
+
+        <div class="metric-card">
+            <div>
+                <div class="metric-label">Vape Puff Log</div>
+                <button class="btn-action" style="border-color:#ff4a4a; color:#ff4a4a;" id="vape-btn">Log Puff</button>
+            </div>
+            <div class="metric-value" style="color:#ff4a4a;" id="vape-val">0</div>
+        </div>
+
+        <h2>Sovereignty Matrix</h2>
+        <div id="feedback-box">🛡️ Core initialized. Booting focus stream...</div>
+
+        <button class="btn-main" style="width:100%; padding:12px; font-size:11px; border-radius:8px;" id="export-btn">📊 Export Ledger Data</button>
+    </div>
+
+    <!-- 📊 RIGHT SIDEBAR: SPLIT-SCREEN LOG STREAM -->
+    <div id="right-sidebar">
+        <h2 class="green-header">Live SQL Query Stream</h2>
+        <div id="sql-terminal">
+            <div class="sql-row" id="placeholder-row" style="color: #8ca3ba;">-- Awaiting database inserts...</div>
+        </div>
+    </div>
+
+    <canvas id="visualizer-canvas"></canvas>
+
+    <div id="controls">
+        <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
+    </div>
+    <script>
+        const canvas = document.getElementById('visualizer-canvas');
+        const ctx = canvas.getContext('2d');
+        const startBtn = document.getElementById('start-btn');
+        const sqlTerminal = document.getElementById('sql-terminal');
+        const placeholderRow = document.getElementById('placeholder-row');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const feedbackBox = document.getElementById('feedback-box');
+
+        // Dynamic State Metrics
+        let studyHours = 0.0;
+        let vapePuffs = 0;
+        let rotationAngle = 0;
+        
+        // Comprehensive Ledger Database Array for Accountability Reports
+        let accountabilityLedger = [];
+
+        let audioCtx = null;
+        let analyser = null;
+        let dataArray = null;
+        let source = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // 📊 SIMULATED SQL TABLE INSERT ENGINE
+        function logSqlQuery(action, value, detail = '') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logRow = document.createElement('div');
+            logRow.className = 'sql-row';
             
-            <div class="input-group">
-                <label for="userSelect">Select Account Profile Channel</label>
-                <select id="userSelect" class="login-select">
-                    <option value="" disabled selected>Choose tenant node...</option>
-                    <option value="bismark">Bismark (Premium Diamond)</option>
-                    <option value="peace">Peace (Standard Tier-1)</option>
-                    <option value="john">Mr. John Mensah (Enterprise Business)</option>
-                    <option value="beatrice">Beatrice Okim (Gold VIP Savings)</option>
-                </select>
-            </div>
+            if(action === 'VAPE') {
+                logRow.innerHTML = `<span style="color:#ff4a4a;">[${timestamp}]</span> INSERT INTO health_ledger (puff_count, limit_max) VALUES (${value}, 14);`;
+            } else {
+                logRow.innerHTML = `<span style="color:#00ff87;">[${timestamp}]</span> UPDATE productivity SET hours_logged = ${value.toFixed(1)} WHERE task = '${detail}';`;
+            }
+            
+            if (placeholderRow) {
+                placeholderRow.style.display = 'none';
+            }
+            
+            sqlTerminal.appendChild(logRow);
+            sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
+        }
 
-            <div class="input-group">
-                <label for="userPassword">Authorization Security PIN</label>
-                <input type="password" id="userPassword" class="login-input" placeholder="••••••••" maxlength="8">
-            </div>
+        // 🛡️ DYNAMIC PREMIUM VALIDATION MATRIX GENERATOR
+        function updateSovereigntyStatus() {
+            if (studyHours === 0) {
+                feedbackBox.style.color = '#8ca3ba';
+                feedbackBox.style.borderColor = 'rgba(140, 163, 186, 0.3)';
+                feedbackBox.innerHTML = "🛡️ Core initialized. Booting focus stream...";
+                return;
+            }
 
-            <button class="login-btn" id="loginBtn">AUTHORIZE SESSION</button>
-            <div class="login-error" id="loginError"></div>
-        </div>
-    </div>
+            if (studyHours > 0 && studyHours < 2.0) {
+                feedbackBox.style.color = '#d4af37';
+                feedbackBox.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+                feedbackBox.innerHTML = `⚡ <strong>WARRIOR FUEL:</strong> ${studyHours.toFixed(1)} Hrs logged. You are actively laying down structural bricks right now. Keep your head down and stay inside the arena!`;
+            } else if (studyHours >= 2.0 && studyHours < 4.0) {
+                feedbackBox.style.color = '#00ff87';
+                feedbackBox.style.borderColor = 'rgba(0, 255, 135, 0.5)';
+                feedbackBox.innerHTML = `🏆 <strong>ELITE PROGRESS:</strong> ${studyHours.toFixed(1)} Hrs completed! Your discipline matrix is outperforming the average standard. Keep pushing!`;
+            } else {
+                feedbackBox.style.color = '#00ffff';
+                feedbackBox.style.borderColor = 'rgba(0, 255, 255, 0.5)';
+                feedbackBox.innerHTML = `🌌 <strong>SOVEREIGN ASCENSION:</strong> ${studyHours.toFixed(1)} Hrs! Absolute mastery achieved. You have built pure value out of empty time today, Bismark. Legendary execution!`;
+            }
+        }
 
-    <!-- 💳 STEP 2: MAIN VERTICAL SIDEBAR BANK CONTAINER -->
-    <div class="chat-container blurred" id="mainContainer">
-        
-                <!-- 🎖️ BRANDING HEADER (Top Padding Calibrated for Absolute Visibility) -->
-        <div class="chat-header">
-            <div class="avatar-container" style="cursor: pointer;" id="avatarContainer" title="Click to upload custom profile picture">
-                <div class="bot-avatar">
-                    <img id="profileImage" src="https://unsplash.com" alt="Jedi Core Bot Portal">
-                </div>
-                <!-- Hidden file upload listener element node -->
-                <input type="file" id="avatarPicker" accept="image/*" style="display: none;">
-                <div class="online-indicator"></div>
-            </div>
-            <div class="header-text">
-                <h2 id="bankTitle">Jedi Premium Bank</h2>
-                <p>Secure Self-Service Agent Vault</p>
-            </div>
-            <div class="user-badge" id="userBadge">Guest Session</div>
-        </div>
+        // MODAL VIEW CONTROLS
+        document.getElementById('study-btn').addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+        });
 
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
 
-        <div class="chat-feed" id="chatFeed">
-            <div class="message bot" id="welcomeMessage">
-                Welcome to Jedi Bank Customer Portal. Please authorize your session credentials above to clear account actions. 🦾💳
-            </div>
-        </div>
+        function submitBlock(category) {
+            studyHours += 0.5;
+            document.getElementById('study-val').innerText = `${studyHours.toFixed(1)} Hrs`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            // Log entry into the local data system object
+            accountabilityLedger.push({
+                type: 'PRODUCTIVITY',
+                timestamp: timestamp,
+                node: category,
+                duration: '30 Mins',
+                total_hours_running: studyHours
+            });
+            
+            logSqlQuery('STUDY', studyHours, category);
+            updateSovereigntyStatus();
+            closeModal();
+        }
 
-        <!-- ⌨️ INPUT PANEL WITH NEW MICROPHONE ELEMENT -->
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="userInput" placeholder="Authorize prompt matrix line..." disabled>
-            <button class="mic-btn" id="micBtn" title="Speak to Jedi Agent" disabled>🎙️</button>
-            <button class="send-btn" disabled>SEND</button>
-        </div>
+        // Vape Trigger Node
+        document.getElementById('vape-btn').addEventListener('click', () => {
+            vapePuffs += 1;
+            document.getElementById('vape-val').innerText = vapePuffs;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            accountabilityLedger.push({
+                type: 'HEALTH_ALTERATION',
+                timestamp: timestamp,
+                action: 'VAPE_PUFF_LOGGED',
+                current_total: vapePuffs,
+                safety_ceiling: 14
+            });
+            
+            logSqlQuery('VAPE', vapePuffs);
+        });
+        // 📊 RAW DATA EXPORT MATRIX ENGINE
+        document.getElementById('export-btn').addEventListener('click', () => {
+            if (accountabilityLedger.length === 0) {
+                alert("Ledger data pipeline empty. Log focus hours or vape telemetry first!");
+                return;
+            }
+            
+            const dateStr = new Date().toLocaleDateString();
+            let summaryText = `====================================\n`;
+            summaryText += `👑 Bismark's Masculine Accountability Ledger 👑\n`;
+            summaryText += `📅 Date Vector: ${dateStr}\n`;
+            summaryText += `====================================\n`;
+            summaryText += `📊 TOTAL STUDY DURATION: ${studyHours.toFixed(1)} Hrs\n`;
+            summaryText += `🚭 TOTAL VAPE PUFFS: ${vapePuffs} / 14 Max\n`;
+            summaryText += `------------------------------------\n`;
+            summaryText += `📝 RAW DATA TRANSACTION PATHS:\n`;
+            
+            accountabilityLedger.forEach((entry, idx) => {
+                if (entry.type === 'PRODUCTIVITY') {
+                    summaryText += `  [${idx + 1}] [${entry.timestamp}] FOCUS INSIGHT -> Node: ${entry.node} | Block: ${entry.duration} | Total: ${entry.total_hours_running.toFixed(1)} Hrs\n`;
+                } else {
+                    summaryText += `  [${idx + 1}] [${entry.timestamp}] HEALTH LOG   -> Action: ${entry.action} | Count: ${entry.current_total} | Ceiling: ${entry.safety_ceiling}\n`;
+                }
+            });
+            
+            summaryText += `====================================\n`;
+            summaryText += `Telemetry extraction verified. Copy this block entirely and send to GEMI!`;
+            
+            // Create a temporary textarea box to pipe copy actions directly into user computer clipboard
+            const tempBox = document.createElement('textarea');
+            tempBox.value = summaryText;
+            document.body.appendChild(tempBox);
+            tempBox.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempBox);
+            
+            alert("🚀 LEDGER TRANSMISSION ARCHIVE COPIED! The entire data summary block is inside your clipboard memory. Simply paste (Ctrl+V) directly into our chat loop!");
+        });
 
-    </div>
+        async function initializeAudioNexus() {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                source = audioCtx.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256; 
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                startBtn.style.display = 'none';
+                renderMatrixAnimation();
+            } catch (err) {
+                console.error("Audio Nexus Connection Failed:", err);
+            }
+        }
 
-    <!-- 🌐 STEP 3: FLOATING ECOSYSTEM ACTIONS SIDEBAR (Floats elegantly on the right) -->
-    <div class="ecosystem-sidebar blurred" id="ecosystemSidebar">
-        <div class="sidebar-title">Ecosystem Quick Shortcuts</div>
-        
-        <button class="eco-btn" data-intent="Book a luxury flight ticket to London">
-            <span class="eco-icon">✈️</span>
-            <div class="eco-text"><strong>Book Flight</strong><p>London Travel Matrix</p></div>
-        </button>
+        function renderMatrixAnimation() {
+            if (!analyser) return;
+            requestAnimationFrame(renderMatrixAnimation);
+            
+            analyser.getByteFrequencyData(dataArray);
+            
+            ctx.fillStyle = 'rgba(5, 8, 17, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const bufferLength = analyser.frequencyBinCount;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            let bassSum = 0;
+            for(let i = 0; i < 15; i++) bassSum += dataArray[i];
+            let bassAverage = bassSum / 15;
+            let pulseRadius = 100 + (bassAverage * 0.5);
+            
+            ctx.shadowBlur = 40 + (bassAverage * 0.4);
+            ctx.shadowColor = 'rgba(0, 255, 135, 0.8)';
+            
+            let gradient = ctx.createRadialGradient(centerX, centerY, 5, centerX, centerY, pulseRadius);
+            gradient.addColorStop(0, '#ffffff'); 
+            gradient.addColorStop(0.2, '#d4af37'); 
+            gradient.addColorStop(0.6, 'rgba(0, 255, 137, 0.6)'); 
+            gradient.addColorStop(1, 'rgba(5, 8, 17, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, pulseRadius, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
 
-        <button class="eco-btn" data-intent="Request a premium Uber ride station haul">
-            <span class="eco-icon">🚗</span>
-            <div class="eco-text"><strong>Request Uber</strong><p>On-Demand Logistics</p></div>
-        </button>
+            const totalBars = 80; 
+            const maxRadius = pulseRadius + 15;
+            
+            for (let i = 0; i < totalBars; i++) {
+                const dataIndex = Math.floor((i / totalBars) * bufferLength);
+                const audioValue = dataArray[dataIndex];
+                const barHeight = (audioValue / 255) * 150; 
+                
+                const angle = (i / totalBars) * Math.PI * 2;
+                const startX = centerX + Math.cos(angle) * maxRadius;
+                const startY = centerY + Math.sin(angle) * maxRadius;
+                const endX = centerX + Math.cos(angle) * (maxRadius + barHeight);
+                const endY = centerY + Math.sin(angle) * (maxRadius + barHeight);
+                
+                const dynamicHue = (i * (360 / totalBars)) + (audioValue * 0.4); 
+                
+                ctx.strokeStyle = `hsl(${dynamicHue % 360}, 100%, 55%)`;
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+            }
 
-        <button class="eco-btn" data-intent="Check my statement account transactions ledger">
-            <span class="eco-icon">📜</span>
-            <div class="eco-text"><strong>Recent Audit</strong><p>Ledger Statement Tracker</p></div>
-        </button>
+            rotationAngle += 0.002; 
+            const textString = " JEDI AUDIO HORIZON MATRIX • SYSTEM ONLINE • SYSTEM ONLINE •";
+            const orbitDistance = maxRadius + 110; 
+            
+            ctx.font = "bold 24px 'Segoe UI', sans-serif";
+            ctx.fillStyle = "rgba(212, 175, 55, 0.9)"; 
+            
+            const totalTextAngle = Math.PI * 2; 
+            const anglePerChar = totalTextAngle / textString.length;
+            
+            for (let t = 0; t < textString.length; t++) {
+                const char = textString[t];
+                const charAngle = rotationAngle + (t * anglePerChar);
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(charAngle);
+                ctx.fillText(char, 0, -orbitDistance);
+                ctx.restore();
+            }
+        }
 
-        <button class="eco-btn" data-intent="Verify secure profile bvn protection vector">
-            <span class="eco-icon">🎖️</span>
-            <div class="eco-text"><strong>Security Core</strong><p>BVN Lock Integrity</p></div>
-        </button>
-    </div>
-
-    <script src="./script.js"></script>
+        startBtn.addEventListener('click', initializeAudioNexus);
+    </script>
 </body>
 </html>

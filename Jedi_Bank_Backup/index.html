@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jedi Bank - Core System Portal</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <!-- 🔐 SECURITY LOGIN ACCESS GATE OVERLAY -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="login-logo">🏛️</div>
+                <h2>JEDI PREMIUM CORE</h2>
+                <p>Multi-Tenant Security Gate</p>
+            </div>
+            <div class="input-group">
+                <label for="userSelect">Select Account Profile Channel</label>
+                <select id="userSelect" class="login-select">
+                    <option value="" disabled selected>Choose tenant node...</option>
+                    <option value="bismark">Bismark (Premium Diamond)</option>
+                    <option value="peace">Peace (Standard Tier-1)</option>
+                    <option value="john">Mr. John Mensah (Enterprise Business)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="userPassword">Authorization Security PIN</label>
+                <input type="password" id="userPassword" class="login-input" placeholder="••••" maxlength="4">
+            </div>
+            <button class="login-btn" id="loginBtn">AUTHORIZE SESSION</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <!-- 💳 MAIN PORTAL CONTAINER (Strict Vertical Sidebar Card Layout) -->
+    <div class="chat-container blurred" id="mainContainer">
+        <div class="chat-header">
+            <div class="avatar-container">
+                <div class="bot-avatar">🏛️</div>
+                <div class="online-indicator"></div>
+            </div>
+            <div class="header-text">
+                <h2 id="bankTitle">Jedi Core Terminal</h2>
+                <p>Secure Self-Service Agent Vault</p>
+            </div>
+            <div class="user-badge" id="userBadge">Guest Node</div>
+        </div>
+        <div class="chat-feed" id="chatFeed">
+            <div class="message bot" id="welcomeMessage">
+                Welcome to Jedi Core Security System. Please authorize session credentials at the gateway core to clear account actions. 🦾💳
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="userInput" placeholder="Authorize prompt matrix line..." disabled>
+            <button class="send-btn" disabled>SEND</button>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
