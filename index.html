@@ -446,6 +446,28 @@
         </div>
     </div>
         <script>
+                    // 🗓️ DATE-AWARE AUTOMATIC RESET TRACKING ENGINE
+        const currentLocalDate = new Date().toLocaleDateString();
+        
+        // Fetch past memory states from browser vault
+        let savedDate = localStorage.getItem('sovereignty_date');
+        let studyHours = parseFloat(localStorage.getItem('study_hours')) || 0.0;
+        let vapePuffs = parseInt(localStorage.getItem('vape_puffs')) || 0;
+
+        // ⚡ THE MIDNIGHT SYSTEM RESET FIREWALL
+        if (savedDate !== currentLocalDate) {
+            studyHours = 0.0;
+            vapePuffs = 0; // Automatically drops back to zero on a brand new day!
+            localStorage.setItem('sovereignty_date', currentLocalDate);
+            localStorage.setItem('study_hours', studyHours);
+            localStorage.setItem('vape_puffs', vapePuffs);
+        }
+
+        // Helper function to safely update browser vault memory on every click
+        function updateVaultMemory() {
+            localStorage.setItem('study_hours', studyHours);
+            localStorage.setItem('vape_puffs', vapePuffs);
+        }
         const canvas = document.getElementById('visualizer-canvas');
         const ctx = canvas.getContext('2d');
         const startBtn = document.getElementById('start-btn');
@@ -466,9 +488,29 @@
         const recordBtn = document.getElementById('record-btn');
 
         // Dynamic State Metrics
-        let studyHours = 0.0;
-        let vapePuffs = 5; // Preserving your 5-puff victory history!
-        let rotationAngle = 0;
+               // 🗓️ DATE-AWARE AUTOMATIC RESET TRACKING ENGINE
+        const currentLocalDate = new Date().toLocaleDateString();
+        
+        // Fetch past memory states from browser vault
+        let savedDate = localStorage.getItem('sovereignty_date');
+        let studyHours = parseFloat(localStorage.getItem('study_hours')) || 0.0;
+        let vapePuffs = parseInt(localStorage.getItem('vape_puffs')) || 0;
+
+              // ⚡ THE MIDNIGHT SYSTEM RESET FIREWALL
+        if (savedDate !== currentLocalDate) {
+            studyHours = 0.0;
+            vapePuffs = 0; // Automatically drops back to zero on a brand new day!
+            localStorage.setItem('sovereignty_date', currentLocalDate);
+            localStorage.setItem('study_hours', studyHours);
+            localStorage.setItem('vape_puffs', vapePuffs);
+        }
+
+        // Helper function to safely update browser vault memory on every click
+        function updateVaultMemory() {
+            localStorage.setItem('study_hours', studyHours);
+            localStorage.setItem('vape_puffs', vapePuffs);
+        }
+
         let accountabilityLedger = [];
 
         // Advanced Timer State Variables
