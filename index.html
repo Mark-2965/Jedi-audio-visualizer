@@ -413,6 +413,27 @@
                 <div class="metric-value" style="color:#ff4a4a;" id="vape-val">5</div>
             </div>
 
+                        <!-- 🍗 NEW NUTRITIONAL RECOVERY FIREWALL CARD -->
+            <div class="metric-card" style="border-color: #ff9f43; background: rgba(255, 159, 67, 0.03);">
+                <div style="width: 100%;">
+                    <div class="metric-label" style="color: #ff9f43; margin-bottom: 8px;">Nutritional Recovery Guard</div>
+                    
+                    <!-- Dropdown Select Picker -->
+                    <select id="meal-type-select" style="width: 100%; background: #050811; border: 1px solid rgba(255, 159, 67, 0.4); border-radius: 6px; padding: 6px; color: #ff9f43; font-size: 11px; outline: none; margin-bottom: 8px; text-transform: uppercase;">
+                        <option value="Breakfast">🍳 Breakfast</option>
+                        <option value="Lunch">🍗 Lunch</option>
+                        <option value="Dinner">🍲 Dinner</option>
+                        <option value="Snack">🍌 Snack</option>
+                    </select>
+                    
+                    <!-- Text Description Input Field -->
+                    <input type="text" id="meal-desc-input" placeholder="Type food description (e.g. Bread & Milk)" style="width: 100%; background: #050811; border: 1px solid rgba(255, 159, 67, 0.4); border-radius: 6px; padding: 8px; color: #fff; font-size: 11px; outline: none; margin-bottom: 8px;">
+                    
+                    <button class="btn-action" style="border-color: #ff9f43; color: #ff9f43; width: 100%; text-align: center;" id="log-meal-btn">Secure Meal Log</button>
+                </div>
+            </div>
+
+
             <h2>Interface Control Matrix</h2>
             <div class="metric-card" style="margin-bottom:12px;">
                 <span class="metric-label">Audio Matrix Stream</span>
@@ -636,6 +657,46 @@
             sqlTerminal.appendChild(logRow);
             sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
         }
+
+                // 🍗 NUTRITIONAL GUARD INTERFACE TRIGGER NODE
+        document.getElementById('log-meal-btn').addEventListener('click', () => {
+            const mealType = document.getElementById('meal-type-select').value;
+            const mealDesc = document.getElementById('meal-desc-input').value.trim();
+            
+            if (mealDesc === "") {
+                alert("❌ CRITICAL ERROR: Food description field cannot be left blank. State your nutrition vector to protect your stomach lining!");
+                return;
+            }
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            // Push transaction record straight into your master accountability ledger array
+            accountabilityLedger.push({
+                type: 'NUTRITION',
+                timestamp: timestamp,
+                meal: mealType,
+                description: mealDesc,
+                protection_status: 'Protected'
+            });
+            
+            // Build and stream the simulated SQL insert command dynamically to the green terminal panel
+            const logRow = document.createElement('div');
+            logRow.className = 'sql-row';
+            logRow.style.borderLeftColor = '#ff9f43';
+            logRow.innerHTML = `<span style="color:#ff9f43;">[${timestamp}]</span> INSERT INTO nutrition_ledger (meal_type, food_description, acid_status) VALUES ('${mealType}', '${mealDesc}', 'Protected');`;
+            
+            if (placeholderRow) placeholderRow.style.display = 'none';
+            sqlTerminal.appendChild(logRow);
+            sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
+            
+            // Clear description input field to reset UI for next log
+            document.getElementById('meal-desc-input').value = "";
+            
+            // Update feedback alert box with strategic warrior recovery validation notice
+            feedbackBox.style.color = '#ff9f43';
+            feedbackBox.style.borderColor = 'rgba(255, 159, 67, 0.5)';
+            feedbackBox.innerHTML = `🍗 <strong>NUTRITION SECURED:</strong> Logged ${mealType} (${mealDesc}). Fueling the physical machine is non-negotiable for total sovereignty!`;
+        });
 
         // Vape Telemetry Trigger Node
         document.getElementById('vape-btn').addEventListener('click', () => {
