@@ -620,6 +620,14 @@
             
             const hoursEarned = totalSecondsElapsed / 3600;
             studyHours += hoursEarned;
+                        // 📡 STREAM PACKET DIRECTLY TO PYTHON DATABASE SERVER
+            commitTelemetryToBackendServer('study', {
+                focus_node: currentActiveTask,
+                duration_hours: hoursEarned,
+                session_status: 'Interrupted',
+                interruption_reason: reason
+            });
+
             studyVal.innerText = "00:00";
             
             updateVaultMemory();
@@ -638,6 +646,28 @@
             
             logSqlQuery('STUDY_INTERRUPTED', hoursEarned, `${currentActiveTask}' AND status='Interrupted' AND reason='${reason}`);
             updateSovereigntyStatus();
+        }
+
+                // 📡 CENTRAL API BACKEND TRANSMISSION PLATFORM ENGINE
+        async function commitTelemetryToBackendServer(endpointPath, payloadData) {
+            const serverUrl = `http://localhost:8080/api/${endpointPath}`;
+            
+            // Add automatic calendar date and time variables to every incoming log row packet
+            payloadData.date_vector = new Date().toLocaleDateString();
+            payloadData.timestamp_marker = new Date().toLocaleTimeString();
+
+            try {
+                const response = await fetch(serverUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'cors',
+                    body: json.stringify(payloadData)
+                });
+                const result = await response.json();
+                console.log("📡 DATABASE SERVER SYNC RESPONSE:", result);
+            } catch (error) {
+                console.error("❌ BACKEND CONNECTION OFFLINE:", error);
+            }
         }
 
         // 📊 SIMULATED SQL TABLE INSERT ENGINE
@@ -679,6 +709,13 @@
                 description: mealDesc,
                 protection_status: 'Protected'
             });
+                        // 📡 STREAM PACKET DIRECTLY TO PYTHON DATABASE SERVER
+            commitTelemetryToBackendServer('nutrition', {
+                meal_type: mealType,
+                food_description: mealDesc,
+                acid_protection_status: 'Protected'
+            });
+
             
             // Build and stream the simulated SQL insert command dynamically to the green terminal panel
             const logRow = document.createElement('div');
@@ -702,6 +739,13 @@
         // Vape Telemetry Trigger Node
         document.getElementById('vape-btn').addEventListener('click', () => {
             vapePuffs += 1;
+                        // 📡 STREAM PACKET DIRECTLY TO PYTHON DATABASE SERVER
+            commitTelemetryToBackendServer('health', {
+                action_type: 'VAPE_PUFF_LOGGED',
+                current_count: vapePuffs,
+                safety_ceiling: 14
+            });
+
             document.getElementById('vape-val').innerText = vapePuffs;
             
             updateVaultMemory();
