@@ -445,11 +445,17 @@
             <button class="btn-main" id="start-btn">Initialize Audio Nexus</button>
         </div>
     </div>
-        <script>
-                    // 🗓️ DATE-AWARE AUTOMATIC RESET TRACKING ENGINE
+           <script>
+        // 🗓️ 1. GLOBAL STATE & DATE-AWARE STORAGE RESERVOIR INITIALIZATION
         const currentLocalDate = new Date().toLocaleDateString();
         
-        // Fetch past memory states from browser vault
+        // Securely pull or establish baseline states from the browser memory vault
+        if (!localStorage.getItem('sovereignty_date')) {
+            localStorage.setItem('sovereignty_date', currentLocalDate);
+            localStorage.setItem('study_hours', '0.0');
+            localStorage.setItem('vape_puffs', '0');
+        }
+
         let savedDate = localStorage.getItem('sovereignty_date');
         let studyHours = parseFloat(localStorage.getItem('study_hours')) || 0.0;
         let vapePuffs = parseInt(localStorage.getItem('vape_puffs')) || 0;
@@ -457,17 +463,19 @@
         // ⚡ THE MIDNIGHT SYSTEM RESET FIREWALL
         if (savedDate !== currentLocalDate) {
             studyHours = 0.0;
-            vapePuffs = 0; // Automatically drops back to zero on a brand new day!
+            vapePuffs = 0; // Automatically flushes parameters back to zero for the new day!
             localStorage.setItem('sovereignty_date', currentLocalDate);
-            localStorage.setItem('study_hours', studyHours);
-            localStorage.setItem('vape_puffs', vapePuffs);
+            localStorage.setItem('study_hours', '0.0');
+            localStorage.setItem('vape_puffs', '0');
         }
 
-        // Helper function to safely update browser vault memory on every click
+        // Helper function to safely update browser memory vault changes
         function updateVaultMemory() {
-            localStorage.setItem('study_hours', studyHours);
-            localStorage.setItem('vape_puffs', vapePuffs);
+            localStorage.setItem('study_hours', studyHours.toString());
+            localStorage.setItem('vape_puffs', vapePuffs.toString());
         }
+
+        // 🏛️ 2. DOM INTERFACE COCKPIT MAPPER NODES
         const canvas = document.getElementById('visualizer-canvas');
         const ctx = canvas.getContext('2d');
         const startBtn = document.getElementById('start-btn');
@@ -487,51 +495,27 @@
         const visualizerToggleBtn = document.getElementById('visualizer-toggle-btn');
         const recordBtn = document.getElementById('record-btn');
 
-        // Dynamic State Metrics
-               // 🗓️ DATE-AWARE AUTOMATIC RESET TRACKING ENGINE
-        const currentLocalDate = new Date().toLocaleDateString();
-        
-        // Fetch past memory states from browser vault
-        let savedDate = localStorage.getItem('sovereignty_date');
-        let studyHours = parseFloat(localStorage.getItem('study_hours')) || 0.0;
-        let vapePuffs = parseInt(localStorage.getItem('vape_puffs')) || 0;
-
-              // ⚡ THE MIDNIGHT SYSTEM RESET FIREWALL
-        if (savedDate !== currentLocalDate) {
-            studyHours = 0.0;
-            vapePuffs = 0; // Automatically drops back to zero on a brand new day!
-            localStorage.setItem('sovereignty_date', currentLocalDate);
-            localStorage.setItem('study_hours', studyHours);
-            localStorage.setItem('vape_puffs', vapePuffs);
-        }
-
-        // Helper function to safely update browser vault memory on every click
-        function updateVaultMemory() {
-            localStorage.setItem('study_hours', studyHours);
-            localStorage.setItem('vape_puffs', vapePuffs);
-        }
-
+        // Animation state trackers
+        let rotationAngle = 0;
         let accountabilityLedger = [];
-
-        // Advanced Timer State Variables
         let timerInterval = null;
         let totalSecondsElapsed = 0;
         let isSessionActive = false;
         let currentActiveTask = '';
 
-        // Audio System State Toggles
+        // Audio node tracks
         let audioCtx = null;
         let analyser = null;
         let dataArray = null;
         let source = null;
         let isVisualizerPaused = false;
 
-        // Microphone Media Recording Objects
+        // Media records
         let mediaRecorder = null;
         let audioChunks = [];
         let isRecording = false;
 
-        // Synchronize interface view on load
+        // Synchronize display UI layout fields directly with memory data
         document.getElementById('vape-val').innerText = vapePuffs;
 
         function resizeCanvas() {
@@ -546,7 +530,7 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // 🔒 1. THE SOVEREIGN 308256 PASS-KEY AUTHENTICATION ENGINE
+        // 🔒 3. THE UNBROKEN 308256 SECURITY LOCK GATE FUNCTION
         loginBtn.addEventListener('click', executeGateKeyCheck);
         passInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') executeGateKeyCheck();
@@ -570,8 +554,7 @@
                 }, 2000);
             }
         }
-
-        // ⏱️ 2. THE HIGH-VALUE TIMELINE STOPWATCH ENGINE
+        // ⏱️ 4. THE LIVE VARIABLE INTERRUPT TIMELINE ENGINE
         timerControlBtn.addEventListener('click', () => {
             if (!isSessionActive) {
                 taskModal.classList.add('active'); 
@@ -617,6 +600,8 @@
             studyHours += hoursEarned;
             studyVal.innerText = "00:00";
             
+            updateVaultMemory();
+            
             const timestamp = new Date().toLocaleTimeString();
             
             accountabilityLedger.push({
@@ -632,6 +617,7 @@
             logSqlQuery('STUDY_INTERRUPTED', hoursEarned, `${currentActiveTask}' AND status='Interrupted' AND reason='${reason}`);
             updateSovereigntyStatus();
         }
+
         // 📊 SIMULATED SQL TABLE INSERT ENGINE
         function logSqlQuery(action, value, detail = '') {
             const timestamp = new Date().toLocaleTimeString();
@@ -655,6 +641,9 @@
         document.getElementById('vape-btn').addEventListener('click', () => {
             vapePuffs += 1;
             document.getElementById('vape-val').innerText = vapePuffs;
+            
+            updateVaultMemory();
+            
             const timestamp = new Date().toLocaleTimeString();
             
             accountabilityLedger.push({
@@ -667,7 +656,7 @@
             logSqlQuery('VAPE', vapePuffs);
         });
 
-        // ⏸️ 3. AUDIO VISUALIZER FREEZE TOGGLE NODE
+        // ⏸️ 5. AUDIO VISUALIZER FREEZE TOGGLE NODE
         visualizerToggleBtn.addEventListener('click', () => {
             isVisualizerPaused = !isVisualizerPaused;
             if (isVisualizerPaused) {
@@ -681,8 +670,7 @@
                 if (analyser) renderMatrixAnimation(); 
             }
         });
-
-        // ⏺️ 4. THE HTML5 MEDIARECORDER AUDIO CAPTURE NEXUS
+        // ⏺️ 6. THE HTML5 MEDIARECORDER AUDIO CAPTURE NEXUS
         recordBtn.addEventListener('click', async () => {
             if (!isRecording) {
                 try {
@@ -754,6 +742,7 @@
                 feedbackBox.innerHTML = `🌌 <strong>SOVEREIGN ASCENSION:</strong> ${studyHours.toFixed(4)} Hrs! Absolute mastery achieved. You have built pure value out of empty time today, Bismark. Legendary execution!`;
             }
         }
+
         // 📊 RAW DATA EXPORT MATRIX ENGINE
         document.getElementById('export-btn').addEventListener('click', () => {
             if (accountabilityLedger.length === 0) {
@@ -810,7 +799,6 @@
                 console.error("Audio Nexus Connection Failed:", err);
             }
         }
-
         function renderMatrixAnimation() {
             if (!analyser || isVisualizerPaused) return;
             requestAnimationFrame(renderMatrixAnimation);
