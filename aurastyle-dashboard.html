@@ -280,8 +280,9 @@
             aiOutputCanvas.style.borderColor = "#00ff87";
             aiOutputCanvas.style.color = "#00ff87";
 
-            const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, ${promptText}`;
-            const optimizedServerUrl = `https://pollinations.ai/${encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
+                       const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, ${promptText}`;
+            const optimizedServerUrl = `https://pollinations.ai{encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
+
             
             console.log("🚀 AI STREAM LINK MATRIX INITIALIZED:", optimizedServerUrl);
 
