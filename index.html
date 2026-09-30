@@ -700,7 +700,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     mode: 'cors',
-                    body: json.stringify(payloadData)
+                    body: JSON.stringify(payloadData)
                 });
                 const result = await response.json();
                 console.log("📡 DATABASE SERVER SYNC RESPONSE:", result);
