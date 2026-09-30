@@ -687,27 +687,56 @@
             updateSovereigntyStatus();
         }
 
-                // 📡 CENTRAL API BACKEND TRANSMISSION PLATFORM ENGINE
+                 // 📤 THE TWO-WAY SYNCHRONIZATION BACKEND DEPLOYMENT PUSHER
         async function commitTelemetryToBackendServer(endpointPath, payloadData) {
-            const serverUrl = `http://localhost:8080/api/${endpointPath}`;
-            
-            // Add automatic calendar date and time variables to every incoming log row packet
-            payloadData.date_vector = new Date().toLocaleDateString();
-            payloadData.timestamp_marker = new Date().toLocaleTimeString();
+            // Update local drive metrics first as an offline backup firewall
+            if (typeof updateVaultMemory === 'function') updateVaultMemory();
+
+            if (!SYNC_CONFIG.enabled || SYNC_CONFIG.gistId === 'DEFAULT_VAULT_NODE') {
+                console.log("ℹ️ LOCAL MODE: Skipping remote synchronization push.");
+                return;
+            }
 
             try {
-                const response = await fetch(serverUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    mode: 'cors',
-                    body: JSON.stringify(payloadData)
+                const targetUrl = `${SYNC_CONFIG.serverUrl}${SYNC_CONFIG.gistId}`;
+                
+                // Construct the master payload packet with all active system values
+                const telemetryPayload = {
+                    study_hours: studyHours.toString(),
+                    vape_puffs: vapePuffs.toString(),
+                    last_updated_device: navigator.userAgent.includes('Mobi') ? 'Mobile Phone' : 'Desktop PC',
+                    timestamp: new Date().toISOString()
+                };
+
+                // Package it inside the structural format required by the GitHub Gist API
+                const gistPayload = {
+                    description: "Jedi Sovereignty Matrix Synchronized Telemetry State",
+                    files: {
+                        "jedi_telemetry.json": {
+                            "content": JSON.stringify(telemetryPayload)
+                        }
+                    }
+                };
+
+                const response = await fetch(targetUrl, {
+                    method: 'PATCH', // PATCH dynamically updates the file data without changing the network URL ID
+                    headers: {
+                        'Authorization': `token ${SYNC_CONFIG.authToken}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(gistPayload)
                 });
-                const result = await response.json();
-                console.log("📡 DATABASE SERVER SYNC RESPONSE:", result);
+
+                if (response.ok) {
+                    console.log(`🚀 TWO-WAY SYNC: Successfully pushed state updates from ${telemetryPayload.last_updated_device} to cloud central vault!`);
+                } else {
+                    console.warn(`⚠️ SYNC WARNING: Cloud server responded with code ${response.status}`);
+                }
             } catch (error) {
-                console.error("❌ BACKEND CONNECTION OFFLINE:", error);
+                console.error("❌ TWO-WAY SYNC FATAL ERROR: Failed to stream payload upstream:", error);
             }
-        }
+        }       
 
         // 📊 SIMULATED SQL TABLE INSERT ENGINE
         function logSqlQuery(action, value, detail = '') {
