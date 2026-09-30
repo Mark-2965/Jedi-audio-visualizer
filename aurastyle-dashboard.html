@@ -120,7 +120,6 @@
         <h1 style="margin: 0; font-size: 26px; letter-spacing: 3px; color: white; font-weight: 800;">SHILZY COLLECTION</h1>
         <p style="color: var(--accent-glow); font-size: 11px; margin: 6px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">⚡ AI-POWERED DESIGN ENGINE & TAILORING LEDGER SYSTEM ⚡</p>
     </div>
-
     <div class="dashboard-container">
         
         <!-- LEFT COLUMN: SHILZY COLLECTION MEASUREMENT SYSTEM -->
@@ -154,16 +153,15 @@
                 <label>Bespoke Design Blueprint Notes</label>
                 <textarea id="style-notes" rows="3" placeholder="A-line cut, custom Ankara flare sleeves, corporate neck design..."></textarea>
             </div>
-            
-                        <!-- 📊 SHILZY ENTERPRISE ACTIVE REAL-TIME LIST GRID -->
+            <button id="save-client-btn">📥 Commit Record to Vault</button>
+
+            <!-- 📊 SHILZY ENTERPRISE ACTIVE REAL-TIME LIST GRID -->
             <div style="margin-top: 25px; border-top: 1px solid rgba(168, 85, 247, 0.2); padding-top: 15px;">
                 <label style="color: #00ff87; font-weight: bold; font-size: 11px; letter-spacing: 1px; margin-bottom: 10px; display: block;">📜 Active Client Profiles Vault</label>
                 <div id="shilzy-records-table-grid" style="max-height: 250px; overflow-y: auto; font-size: 11px; color: var(--text-main);">
-                    <!-- Dynamic client data row objects will compile and append here via script engine -->
                     <p style="color: var(--text-muted); font-style: italic; text-align: center; margin: 15px 0;">No active client profiles saved on this workstation hardware node.</p>
                 </div>
             </div>
-
         </div>
 
         <!-- RIGHT COLUMN: SHILZY AI STYLE CONCEPT ENGINE -->
@@ -181,13 +179,9 @@
         </div>
 
     </div>
-
     <!-- 📐 BRANDED CLIENT STORAGE & INTERACTIVE AI ENGINE SCRIPT -->
     <script>
-        // Dedicated enterprise data key allocation for her database
         const STORAGE_KEY = 'shilzy_collection_vault';
-
-        // Load existing profiles from browser flash memory vault cache
         let shilzyDatabase = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
         const saveClientBtn = document.getElementById('save-client-btn');
@@ -204,9 +198,8 @@
                 return;
             }
 
-            recordsGrid.innerHTML = ''; // Clear out layout grid for fresh compilation reload
+            recordsGrid.innerHTML = '';
             
-            // Loop through data array backwards to show the newest client profiles at the top
             for (let i = shilzyDatabase.length - 1; i >= 0; i--) {
                 const client = shilzyDatabase[i];
                 const rowBlock = document.createElement('div');
@@ -221,7 +214,7 @@
                 rowBlock.innerHTML = `
                     <div style="display: flex; justify-content: space-between; font-weight: bold; color: #ffffff; margin-bottom: 4px;">
                         <span>👤 ${client.client_name}</span>
-                        <span style="color: var(--text-muted); font-size: 9px;">⏰ ${client.timestamp.split(',') ? client.timestamp.split(',')[0] : client.timestamp}</span>
+                        <span style="color: var(--text-muted); font-size: 9px;">⏰ ${client.timestamp}</span>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; color: #00ff87; font-size: 10px; margin-bottom: 6px; font-family: monospace; background: rgba(11,18,32,0.6); padding: 4px; border-radius: 2px; text-align: center;">
                         <div>B: ${client.metrics.chest}"</div>
@@ -246,13 +239,11 @@
             const sleeve = document.getElementById('m-sleeve').value;
             const notes = document.getElementById('style-notes').value.trim();
 
-            // 1. Safety validation firewall must execute first
             if (!name || !chest || !waist || !hips || !sleeve) {
                 alert('⚠️ REJECTED: INCOMPLETE PROFILE NODE!\nPlease fill out the Client Name and all measurement fields before committing.');
                 return;
             }
 
-            // 2. Build the structural record object next
             const recordPayload = {
                 id: Date.now(),
                 client_name: name,
@@ -261,14 +252,11 @@
                 timestamp: new Date().toLocaleString()
             };
 
-            // 3. Commit to database array and save to storage
             shilzyDatabase.push(recordPayload);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(shilzyDatabase));
 
-            // 4. Trigger UI list re-render instantly
             renderShilzyDatabase();
 
-            // 5. Flush inputs clean for next execution cycle
             document.getElementById('client-name').value = '';
             document.getElementById('m-chest').value = '';
             document.getElementById('m-waist').value = '';
@@ -277,10 +265,9 @@
             document.getElementById('style-notes').value = '';
 
             alert(`🎉 SHILZY VAULT COMMIT SUCCESSFUL!\nClient Profile for [${name}] has been securely written to the local database!`);
-            console.log('Current Shilzy Collection State Vector:', shilzyDatabase);
         });
 
-                  // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (DIRECT BACKTICK PROMPT ENGINE)
+        // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (DIRECT BACKTICK PROMPT ENGINE)
         generateDesignBtn.addEventListener('click', () => {
             const promptText = document.getElementById('ai-prompt-input').value.trim();
             
@@ -289,20 +276,15 @@
                 return;
             }
 
-            // Update UI dashboard canvas instantly to visually signal execution state
             aiOutputCanvas.innerText = "⏳ CONNECTING TO SHILZY DESIGN MODEL SERVER... GENERATING CUSTOM SKETCH SCHEMA MATRICES...";
             aiOutputCanvas.style.borderColor = "#00ff87";
             aiOutputCanvas.style.color = "#00ff87";
 
-            // 📡 DIRECT BACKTICK PROTOCOL ROUTING PIPELINE
-            const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, \${promptText}`;
-            
-            // CRITICAL CHECK: Wrapped completely in backticks (`) with the correct path directive (/prompt/)
-            const optimizedServerUrl = `https://pollinations.ai{encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
+            const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, ${promptText}`;
+            const optimizedServerUrl = `https://pollinations.ai/${encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
             
             console.log("🚀 AI STREAM LINK MATRIX INITIALIZED:", optimizedServerUrl);
 
-            // Deploy and render the live conceptual masterpiece image right onto her console frame skin
             aiOutputCanvas.innerHTML = `
                 <div style="text-align: center; width: 100%; height: 100%; box-sizing: border-box; padding: 5px; display: flex; align-items: center; justify-content: center; background: #060b13;">
                     <img src="${optimizedServerUrl}" alt="Shilzy AI Masterpiece Output" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
@@ -310,6 +292,8 @@
             `;
         });
 
-        // Run an automatic initial database compilation check the moment the page boots online
+        // Run initial data layout compilation on startup
         renderShilzyDatabase();
     </script>
+</body>
+</html>
