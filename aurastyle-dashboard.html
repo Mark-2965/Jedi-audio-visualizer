@@ -280,8 +280,8 @@
             console.log('Current Shilzy Collection State Vector:', shilzyDatabase);
         });
 
-              // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (CORS-FREE PIPELINE)
-        generateDesignBtn.addEventListener('click', async () => {
+                  // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (DIRECT BACKTICK PROMPT ENGINE)
+        generateDesignBtn.addEventListener('click', () => {
             const promptText = document.getElementById('ai-prompt-input').value.trim();
             
             if (!promptText) {
@@ -289,41 +289,26 @@
                 return;
             }
 
-            // Update UI workspace states to visually signal model initialization pipelines
-            aiOutputCanvas.innerText = "⏳ CONNECTING TO SHILZY DESIGN MODEL SERVER... PROCESSING RENDERS...";
+            // Update UI dashboard canvas instantly to visually signal execution state
+            aiOutputCanvas.innerText = "⏳ CONNECTING TO SHILZY DESIGN MODEL SERVER... GENERATING CUSTOM SKETCH SCHEMA MATRICES...";
             aiOutputCanvas.style.borderColor = "#00ff87";
             aiOutputCanvas.style.color = "#00ff87";
 
-            try {
-                // 📡 CORS-FREE OPEN PROTOCOL IMAGE COMPILATION PIPELINE
-                const sanitizedPrompt = encodeURIComponent(`professional fashion design sketch, high fashion collection lookbook style, clear lines, clothing presentation, ${promptText}`);
-                const openSourceServerUrl = `https://pollinations.ai{sanitizedPrompt}?width=512&height=768&enhanced=true&seed=${Date.now()}`;
-                
-                // Fire an active pre-fetch handshake trace loop to verify the remote server array is responsive
-                const response = await fetch(openSourceServerUrl);
-                if (!response.ok) throw new Error(`Server array responded with status script code: ${response.status}`);
+            // 📡 DIRECT BACKTICK PROTOCOL ROUTING PIPELINE
+            const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, \${promptText}`;
+            
+            // CRITICAL CHECK: Wrapped completely in backticks (`) with the correct path directive (/prompt/)
+            const optimizedServerUrl = `https://pollinations.ai{encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
+            
+            console.log("🚀 AI STREAM LINK MATRIX INITIALIZED:", optimizedServerUrl);
 
-                // Deploy and render the live conceptual masterpiece image right onto her console frame skin
-                aiOutputCanvas.innerHTML = `
-                    <div style="text-align: center; width: 100%; height: 100%; box-sizing: border-box; padding: 5px;">
-                        <img src="${openSourceServerUrl}" alt="Shilzy AI Concept Output" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error("❌ SHILZY AI PIPELINE CRASH VECTOR:", error);
-                aiOutputCanvas.style.borderColor = "#ff4a4a";
-                aiOutputCanvas.style.color = "#ff4a4a";
-                aiOutputCanvas.innerHTML = `
-                    <div style="text-align: center; padding: 25px;">
-                        <span style="font-size: 24px;">⚠️</span>
-                        <p style="color: #ff4a4a; margin: 8px 0 4px 0; font-weight: bold; font-size: 12px; text-transform: uppercase;">AI Render Initialization Delayed</p>
-                        <p style="color: var(--text-muted); margin: 0; font-size: 10px; max-width: 380px; line-height: 1.4;">The remote deep learning engine is currently loading or handling high capacity volume. Please retry your generation request sequence in 60 seconds.</p>
-                    </div>
-                `;
-            }
+            // Deploy and render the live conceptual masterpiece image right onto her console frame skin
+            aiOutputCanvas.innerHTML = `
+                <div style="text-align: center; width: 100%; height: 100%; box-sizing: border-box; padding: 5px; display: flex; align-items: center; justify-content: center; background: #060b13;">
+                    <img src="${optimizedServerUrl}" alt="Shilzy AI Masterpiece Output" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
+                </div>
+            `;
         });
-
 
         // Run an automatic initial database compilation check the moment the page boots online
         renderShilzyDatabase();
