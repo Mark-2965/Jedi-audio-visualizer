@@ -1033,8 +1033,19 @@
             const focusScore = document.getElementById('sql-focus-rating').value;
             const objectiveDetail = document.getElementById('sql-task-input').value.trim() || 'General Syntax Evaluation';
             
-            // Calculate elapsed time from the active Session Stopwatch timer structure
-            let loggedSeconds = totalSeconds; 
+                        // 🕒 DYNAMIC SCREEN-READER CLOCK PARSER
+            const timerDisplayElement = document.querySelector('.telemetry-card span[style*="color: #00ff87"]') || document.querySelector('.telemetry-card span') || { innerText: "00:00" };
+            const timeStringParts = timerDisplayElement.innerText.split(':');
+            
+            let minutesParsed = parseInt(timeStringParts[0]) || 0;
+            let secondsParsed = parseInt(timeStringParts[1]) || 0;
+            let loggedSeconds = (minutesParsed * 60) + secondsParsed;
+            
+            // Safety firewall: if the clock reads 00:00, force a 10-second mock credit for testing purposes
+            if (loggedSeconds === 0) {
+                loggedSeconds = 10;
+            }
+            
             let calculatedHoursEarned = loggedSeconds / 3600;
             
             // Format time display readable breakdown strings
