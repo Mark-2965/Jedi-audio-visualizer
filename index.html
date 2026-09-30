@@ -433,6 +433,45 @@
                 </div>
             </div>
 
+                    <!-- UNIVERSITY ACADEMIC LEDGER ENGINE -->
+        <div class="telemetry-card" id="academic-tracker-card" style="margin-top: 15px; border-color: rgba(0, 255, 135, 0.2); background: rgba(11, 18, 32, 0.5); padding: 15px; border-radius: 6px; border: 1px solid rgba(0, 255, 135, 0.2);">
+            <div class="card-header" style="color: #00ff87; border-bottom: 1px solid rgba(0, 255, 135, 0.2); padding-bottom: 8px; margin-bottom: 12px; font-weight: bold; font-size: 11px; letter-spacing: 1px;">
+                🎓 UNIVERSITY SQL STUDY TRACKER
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label style="display: block; color: #8ca3ba; font-size: 10px; margin-bottom: 4px; text-transform: uppercase;">Module Focus Node</label>
+                <select id="sql-module-select" style="width: 100%; background: #0b1220; border: 1px solid rgba(140,163,186,0.2); color: #ffffff; padding: 8px; font-size: 11px; border-radius: 4px; font-family: 'Segoe UI', sans-serif;">
+                    <option value="SQL_DDL">DDL (CREATE, ALTER, DROP)</option>
+                    <option value="SQL_DML">DML (INSERT, UPDATE, DELETE)</option>
+                    <option value="SQL_JOINS">JOINS (INNER, LEFT, RIGHT, FULL)</option>
+                    <option value="SQL_AGGREGATES">AGGREGATION (GROUP BY, HAVING)</option>
+                    <option value="SQL_SUBQUERIES">SUBQUERIES & NESTED QUERIES</option>
+                    <option value="SQL_INDEXING">OPTIMIZATION & INDEXING</option>
+                </select>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label style="display: block; color: #8ca3ba; font-size: 10px; margin-bottom: 4px; text-transform: uppercase;">Cognitive Focus Score</label>
+                <select id="sql-focus-rating" style="width: 100%; background: #0b1220; border: 1px solid rgba(140,163,186,0.2); color: #d4af37; padding: 8px; font-size: 11px; border-radius: 4px; font-family: 'Segoe UI', sans-serif; font-weight: bold;">
+                    <option value="5">🔥 LEVEL 5: HYPER-FOCUS STREAM</option>
+                    <option value="4">⚡ LEVEL 4: HIGH COMPILATION VELOCITY</option>
+                    <option value="3">🟢 LEVEL 3: STABLE OPERATION</option>
+                    <option value="2">⚠️ LEVEL 2: SEMANTIC DISTRACTIONS</option>
+                    <option value="1">❌ LEVEL 1: CRITICAL BRAIN FATIGUE</option>
+                </select>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 12px;">
+                <label style="display: block; color: #8ca3ba; font-size: 10px; margin-bottom: 4px; text-transform: uppercase;">Target Database Task Objective</label>
+                <input type="text" id="sql-task-input" placeholder="e.g. Building table schemas for bank app..." style="width: 100%; background: #0b1220; border: 1px solid rgba(140,163,186,0.2); color: #ffffff; padding: 8px; font-size: 11px; border-radius: 4px; box-sizing: border-box; font-family: 'Segoe UI', sans-serif;">
+            </div>
+
+            <button id="log-sql-study-btn" style="width: 100%; background: transparent; border: 1px solid #00ff87; color: #00ff87; padding: 10px; font-size: 11px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: all 0.3s ease;">
+                📥 EXECUTE ACADEMIC INSERT
+            </button>
+        </div>
+
 
             <h2>Interface Control Matrix</h2>
             <div class="metric-card" style="margin-bottom:12px;">
@@ -987,6 +1026,72 @@
                 ctx.restore();
             }
         }
+
+                // 🎓 INTERACTIVE UNIVERSITY SQL STUDY TRACKER ENGINE
+        document.getElementById('log-sql-study-btn').addEventListener('click', () => {
+            const moduleNode = document.getElementById('sql-module-select').value;
+            const focusScore = document.getElementById('sql-focus-rating').value;
+            const objectiveDetail = document.getElementById('sql-task-input').value.trim() || 'General Syntax Evaluation';
+            
+            // Calculate elapsed time from the active Session Stopwatch timer structure
+            let loggedSeconds = totalSeconds; 
+            let calculatedHoursEarned = loggedSeconds / 3600;
+            
+            // Format time display readable breakdown strings
+            let displayMin = Math.floor((loggedSeconds % 3600) / 60);
+            let displaySec = loggedSeconds % 60;
+            let readableDuration = `${displayMin}m ${displaySec}s`;
+            
+            // Commit and increment to global running totals
+            studyHours += calculatedHoursEarned;
+            studyVal.innerText = "00:00"; 
+            totalSeconds = 0; // Automatically clear out stopwatch slate for next track sprint block
+            
+            if (typeof updateVaultMemory === 'function') {
+                updateVaultMemory(); // Update localized browser database cache instantly
+            }
+            if (typeof updateSovereigntyStatus === 'function') {
+                updateSovereigntyStatus(); // Refresh dynamic state text card dashboard metrics
+            }
+
+            const timestamp = new Date().toLocaleTimeString();
+            
+            // Inject structural transaction path trace maps into core memory log data ledger array
+            accountabilityLedger.push({
+                type: 'PRODUCTIVITY',
+                timestamp: timestamp,
+                node: moduleNode,
+                duration: readableDuration,
+                status: 'Completed',
+                interruption_vector: `Focus Level ${focusScore}`,
+                total_hours_running: studyHours,
+                task_details: objectiveDetail
+            });
+
+            // 📟 STREAM LOG TEXT STRINGS STRAIGHT TO VISUAL SQL TERMINAL SCREEN GRID
+            const logRow = document.createElement('div');
+            logRow.className = 'sql-row';
+            logRow.style.borderLeft = '2px solid #00ff87';
+            logRow.style.paddingLeft = '8px';
+            logRow.style.marginBottom = '6px';
+            logRow.style.color = '#e2e8f0';
+            logRow.style.fontSize = '11px';
+            
+            logRow.innerHTML = `
+                <span style="color:#00ff87;">[${timestamp}]</span> 
+                INSERT INTO university_study_ledger (module_node, task_objective, session_duration, cognitive_focus, overall_hours) 
+                VALUES ('${moduleNode}', '${objectiveDetail.replace(/'/g, "''")}', '${readableDuration}', ${focusScore}, ${studyHours.toFixed(4)});
+            `;
+            
+            if (placeholderRow) placeholderRow.style.display = 'none';
+            sqlTerminal.appendChild(logRow);
+            sqlTerminal.scrollTop = sqlTerminal.scrollHeight;
+            
+            // Wipe out input task display value placeholder cell clean for next tracking sprint block execution
+            document.getElementById('sql-task-input').value = '';
+            
+            alert(`🚀 ACADEMIC REGISTRATION SUCCESSFUL!\nModule Log: ${moduleNode}\nDuration Captured: ${readableDuration}\nDatabase Insert String Broadcast Complete!`);
+        });
 
         // 🚀 MASTER CLICK BINDING BEYOND THE ENGINE LOOP
         startBtn.addEventListener('click', initializeAudioNexus);
