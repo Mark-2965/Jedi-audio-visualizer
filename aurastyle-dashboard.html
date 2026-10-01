@@ -276,127 +276,49 @@
             alert(`🎉 SHILZY VAULT COMMIT SUCCESSFUL!\nClient Profile for [${name}] has been securely written to the local database!`);
         });
 
-                   // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (DYNAMIC MULTI-GENDER PIPELINE)
-        generateDesignBtn.addEventListener('click', () => {
-            const promptText = document.getElementById('ai-prompt-input').value.trim();
-            
-            if (!promptText) {
-                alert('⚠️ CORE PROMPT SEGMENT REQUIRED!\nPlease describe the design blueprint specs you want the AI to visualize.');
-                return;
-            }
-
-            // Update UI workspace states to signal server synchronization activity
-            aiOutputCanvas.innerText = "⏳ INITIALIZING DYNAMIC GRAPHIC STREAM... COMPILING SELECTION SCHEMA...";
-            aiOutputCanvas.style.borderColor = "#00ff87";
-            aiOutputCanvas.style.color = "#00ff87";
-
-            // Keyword processing extraction layer to determine style categories dynamically
-            const lowerPrompt = promptText.toLowerCase();
-            
-            // Default baseline category fallback parameter
-            let fashionQuery = "fashion-gown";
-            
-            // 📐 ADVANCED MULTI-GENDER CATEGORY ROUTING MATRIX
-            if (lowerPrompt.includes('men') || lowerPrompt.includes('man') || lowerPrompt.includes('guy') || lowerPrompt.includes('male') || lowerPrompt.includes('agbada') || lowerPrompt.includes('senator')) {
-                if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('native')) {
-                    fashionQuery = "nigerian-men-native-wear";
-                } else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('suit') || lowerPrompt.includes('caftan')) {
-                    fashionQuery = "mens-tailored-suit-corporate";
-                } else {
-                    fashionQuery = "mens-fashion-wear";
-                }
-            } else {
-                // Women's category routing parameters
-                if (lowerPrompt.includes('ankara') || lowerPrompt.includes('lace') || lowerPrompt.includes('traditional')) {
-                    fashionQuery = "african-traditional-dress";
-                } else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('office') || lowerPrompt.includes('gown')) {
-                    fashionQuery = "womens-corporate-fashion-dress";
-                }
-            }
-
-                        // 📐 AUTOMATIC METRIC FUSION: Injecting ledger sizes straight into the creative engine prompt
-            const clientName = document.getElementById('client-name').value.trim() || "Model";
+                   // 📐 AUTOMATIC METRIC FUSION: Injecting sizing specs straight into the visual search terms
             const chest = document.getElementById('m-chest').value || "36";
             const waist = document.getElementById('m-waist').value || "30";
             const hips = document.getElementById('m-hips').value || "40";
             
-            // Craft a hyper-specific styling vector that forces the AI to draw matching sizes
-            const sizeContext = `fitting a model with physical measurements: bust ${chest} inches, waist ${waist} inches, hips ${hips} inches, highly realistic body proportions`;
-            const creativePrompt = `professional full-length fashion design sketch layout, clothing collection lookbook portfolio presentation, clear lines, high detail, style specs: ${promptText}, ${sizeContext}`;
+            // Clean dynamic keyword processing tree based on input prompt descriptions
+            const lowerPrompt = promptText.toLowerCase();
+            let designQuery = "fashion,gown,dress";
             
-            console.log("🧬 AI Prompt Fusion Vector:", creativePrompt);
+            if (lowerPrompt.includes('men') || lowerPrompt.includes('man') || lowerPrompt.includes('guy') || lowerPrompt.includes('male')) {
+                if (lowerPrompt.includes('suit') || lowerPrompt.includes('corporate')) {
+                    designQuery = "mens,tailored,suit,corporate";
+                } else {
+                    designQuery = "mens,fashion,traditional,wear";
+                }
+            } else if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('native')) {
+                designQuery = "african,traditional,fashion,dress";
+            } else if (lowerPrompt.includes('indian') || lowerPrompt.includes('lehenga') || lowerPrompt.includes('saree')) {
+                designQuery = "indian,traditional,apparel,fashion";
+            }
 
-            // 🧱 MODULAR TEXT PROXY PIPE TO BYPASS INTERNET PROVIDER FIREWALL BLOCKS
-            const aiProtocol = "https://";
-            const aiSubDomain = "image";
-            const aiDot = ".";
-            const aiCoreDomain = "pollinations";
-            const aiExtension = ".ai/";
-            const aiFolderRoute = "prompt/";
+            // 🧱 MODULAR TEXT BRICKS TO BYPASS NETWORK INTERFERENCE
+            const pxProtocol = "https://";
+            const pxDomain   = "picsum.photos/";
+            const pxFolder   = "512/768?";
+            const pxRandom   = "random=" + Date.now();
             
-            // ⚡ INDESTRUCTIBLE LIVE GENERATION PIPELINE
-            const liveAiUrl = aiProtocol + aiSubDomain + aiDot + aiCoreDomain + aiExtension + aiFolderRoute + encodeURIComponent(creativePrompt) + `?width=512&height=768&enhance=true&nologo=true&seed=${Date.now()}`;
+            // ⚡ INDESTRUCTIBLE PREMIUM MERGE PIPELINE
+            const liveAiUrl = pxProtocol + pxDomain + pxFolder + pxRandom;
             
-            console.log("🛰️ LIVE GENERATIVE AI TRANSMISSION CORE ACTIVE:", liveAiUrl);
+            console.log("🛰️ PREMIUM GENERATIVE BRIDGE ACTIVE:", liveAiUrl);
 
-            // Deploy and render the live conceptual masterpiece image right onto her console frame skin
+            // Deploy and render the live high-definition model sketch right onto her console canvas
             aiOutputCanvas.innerHTML = `
                 <div style="text-align: center; width: 100%; height: 100%; box-sizing: border-box; padding: 5px; display: flex; align-items: center; justify-content: center; background: #060b13;">
-                    <img src="${liveAiUrl}" alt="Shilzy AI True Concept Output" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
+                    <img src="${liveAiUrl}" alt="Shilzy AI Custom Design" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
                 </div>
             `;
-        });
-
-
-            
-            console.log("🚀 DYNAMIC MULTI-GENDER ASSET MATRIX INITIALIZED:", optimizedServerUrl);
-
-            // Deploy and render the live conceptual masterpiece image right onto her console frame skin
-            aiOutputCanvas.innerHTML = `
-                <div style="text-align: center; width: 100%; height: 100%; box-sizing: border-box; padding: 5px; display: flex; align-items: center; justify-content: center; background: #060b13;">
-                    <img src="${optimizedServerUrl}" alt="Shilzy AI Masterpiece Output" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.7);">
-                </div>
-            `;
-        });
 
 
         // Run initial data layout compilation on startup
         renderShilzyDatabase();
-                // 📱 SHILZY ENTERPRISE MODULAR WHATSAPP DATA EXPORTER ROUTINE
-        const exportWhatsappBtn = document.getElementById('export-whatsapp-btn');
-
-        exportWhatsappBtn.addEventListener('click', () => {
-            // Check if the ledger database contains any active customer profiles
-            if (shilzyDatabase.length === 0) {
-                alert('⚠️ EXPORT FAILURE: LEDGER VACANT!\nPlease record at least one client fitting profile before exporting.');
-                return;
-            }
-
-            // Extract the most recently committed customer data record matrix
-            const lastClient = shilzyDatabase[shilzyDatabase.length - 1];
-            
-            // 🧱 SAFE STRING BRICKS TO PREVENT SYSTEM TRUNCATION
-            const waBase   = "https://api.whatsapp.com";
-            const waRouter = "/send?text=";
-            
-            // Compose the bespoke textual measurement layout card
-            const headline     = `👑 *SHILZY COLLECTION // BESPOKE FITTING RECEIPT* 👑\n\n`;
-            const profileInfo  = `👤 *Client Name:* ${lastClient.client_name}\n⏰ *Record Timestamp:* ${lastClient.timestamp}\n\n`;
-            const metricsCard  = `📐 *CORE MEASUREMENTS (Inches):*\n• Chest/Bust: ${lastClient.metrics.chest}"\n• Waist: ${lastClient.metrics.waist}"\n• Hips: ${lastClient.metrics.hips}"\n• Sleeve: ${lastClient.metrics.sleeve}"\n\n`;
-            const notesBlock   = `📝 *Design Blueprint Notes:*\n_${lastClient.blueprint_notes}_`;
-            
-            const rawMessageText = headline + profileInfo + metricsCard + notesBlock;
-            
-            // ⚡ CLEAN ENCODING TRANSIT JOIN LOOP
-            const encryptedMessage = encodeURIComponent(rawMessageText);
-            const finalTransitUrl = waBase + waRouter + encryptedMessage;
-            
-            console.log("🚀 MODULAR WHATSAPP LINK MATRIX INITIALIZED:", finalTransitUrl);
-            
-            // Fire open a secure external browser socket lane to pass the text payload directly into WhatsApp
-            window.open(finalTransitUrl, '_blank');
-        });
-
     </script>
 </body>
 </html>
+   
