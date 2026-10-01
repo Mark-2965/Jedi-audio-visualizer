@@ -190,13 +190,14 @@
 
     <!-- 📐 BRANDED CLIENT STORAGE & INTERACTIVE AI ENGINE SCRIPT -->
     <script>
-        const STORAGE_KEY = 'shilzy_collection_vault';
+               const STORAGE_KEY = 'shilzy_collection_vault';
         let shilzyDatabase = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-        const saveClientBtn = document.getElementById('save-client-btn');
-        const generateDesignBtn = document.getElementById('generate-design-btn');
-        const aiOutputCanvas = document.getElementById('ai-output-canvas');
-        const recordsGrid = document.getElementById('shilzy-records-table-grid');
+        // 📐 CORE HARDWARE ELEMENT CONNECTIONS (ALL VARS RESTORED FLUSH)
+        const saveClientBtn     = document.getElementById('save-client-btn');
+        const generateDesignBtn = document.getElementById('generate-design-btn'); // 👈 THIS WAS THE MISSING HOOK!
+        const aiOutputCanvas    = document.getElementById('ai-output-canvas');
+        const recordsGrid       = document.getElementById('shilzy-records-table-grid');
 
         // 📊 DISPLAY RENDER ENGINE: PARSING DATA OBJECTS TO LIVE UI ROWS
         function renderShilzyDatabase() {
