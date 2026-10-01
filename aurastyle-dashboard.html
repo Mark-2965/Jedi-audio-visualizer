@@ -120,9 +120,10 @@
         <h1 style="margin: 0; font-size: 26px; letter-spacing: 3px; color: white; font-weight: 800;">SHILZY COLLECTION</h1>
         <p style="color: var(--accent-glow); font-size: 11px; margin: 6px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">⚡ AI-POWERED DESIGN ENGINE & TAILORING LEDGER SYSTEM ⚡</p>
     </div>
+
     <div class="dashboard-container">
-        
-        <!-- LEFT COLUMN: SHILZY COLLECTION MEASUREMENT SYSTEM -->
+
+                <!-- LEFT COLUMN: SHILZY COLLECTION MEASUREMENT SYSTEM -->
         <div class="panel-card">
             <h2>📐 Client Fitting Ledger</h2>
             <div class="form-group">
@@ -164,7 +165,7 @@
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: SHILZY AI STYLE CONCEPT ENGINE -->
+                <!-- RIGHT COLUMN: SHILZY AI STYLE CONCEPT ENGINE -->
         <div class="panel-card">
             <h2>🔮 Shilzy AI Concept Design Prompt</h2>
             <div class="form-group">
@@ -179,6 +180,7 @@
         </div>
 
     </div>
+
     <!-- 📐 BRANDED CLIENT STORAGE & INTERACTIVE AI ENGINE SCRIPT -->
     <script>
         const STORAGE_KEY = 'shilzy_collection_vault';
@@ -230,7 +232,7 @@
             }
         }
 
-        // 📥 SECURE CLIENT PROFILE RECORD INSERTION
+                // 📥 SECURE CLIENT PROFILE RECORD INSERTION
         saveClientBtn.addEventListener('click', () => {
             const name = document.getElementById('client-name').value.trim();
             const chest = document.getElementById('m-chest').value;
@@ -280,9 +282,8 @@
             aiOutputCanvas.style.borderColor = "#00ff87";
             aiOutputCanvas.style.color = "#00ff87";
 
-                       const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, ${promptText}`;
+            const clearPrompt = `professional fashion design dress layout sketch, clothing lookbook illustration presentation, clear lines, ${promptText}`;
             const optimizedServerUrl = `https://pollinations.ai{encodeURIComponent(clearPrompt)}?width=512&height=768&enhance=false&nologo=true&seed=${Date.now()}`;
-
             
             console.log("🚀 AI STREAM LINK MATRIX INITIALIZED:", optimizedServerUrl);
 
