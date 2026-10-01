@@ -276,7 +276,7 @@
             alert(`🎉 SHILZY VAULT COMMIT SUCCESSFUL!\nClient Profile for [${name}] has been securely written to the local database!`);
         });
 
-               // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (UNSPLASH ENTERPRISE PIPELINE)
+                   // 🔮 SHILZY AI INTEGRATED DESIGN PRODUCTION CORE (DYNAMIC MULTI-GENDER PIPELINE)
         generateDesignBtn.addEventListener('click', () => {
             const promptText = document.getElementById('ai-prompt-input').value.trim();
             
@@ -286,25 +286,45 @@
             }
 
             // Update UI workspace states to signal server synchronization activity
-            aiOutputCanvas.innerText = "⏳ INITIALIZING GRAPHIC STREAM CHANNELS... FETCHING MASTERPIECE SCHEMATICS...";
+            aiOutputCanvas.innerText = "⏳ INITIALIZING DYNAMIC GRAPHIC STREAM... COMPILING SELECTION SCHEMA...";
             aiOutputCanvas.style.borderColor = "#00ff87";
             aiOutputCanvas.style.color = "#00ff87";
 
             // Keyword processing extraction layer to determine style categories dynamically
             const lowerPrompt = promptText.toLowerCase();
-            let styleKeyword = 'fashion-gown';
             
-            if (lowerPrompt.includes('ankara') || lowerPrompt.includes('lace') || lowerPrompt.includes('traditional')) {
-                styleKeyword = 'african-fashion-dress';
-            } else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('suit') || lowerPrompt.includes('office')) {
-                styleKeyword = 'corporate-dress-tailored';
+            // Default baseline category fallback parameter
+            let fashionQuery = "fashion-gown";
+            
+            // 📐 ADVANCED MULTI-GENDER CATEGORY ROUTING MATRIX
+            if (lowerPrompt.includes('men') || lowerPrompt.includes('man') || lowerPrompt.includes('guy') || lowerPrompt.includes('male') || lowerPrompt.includes('agbada') || lowerPrompt.includes('senator')) {
+                if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('native')) {
+                    fashionQuery = "nigerian-men-native-wear";
+                } else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('suit') || lowerPrompt.includes('caftan')) {
+                    fashionQuery = "mens-tailored-suit-corporate";
+                } else {
+                    fashionQuery = "mens-fashion-wear";
+                }
+            } else {
+                // Women's category routing parameters
+                if (lowerPrompt.includes('ankara') || lowerPrompt.includes('lace') || lowerPrompt.includes('traditional')) {
+                    fashionQuery = "african-traditional-dress";
+                } else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('office') || lowerPrompt.includes('gown')) {
+                    fashionQuery = "womens-corporate-fashion-dress";
+                }
             }
 
-                       // Definitive string concatenation to guarantee a flawless web link structure
-            const optimizedServerUrl = "https://images.unsplash.com/photo-1595777457583-95e059d581b8" + "?auto=format&fit=crop&w=512&h=768&q=80&sig=" + Date.now();
-
+            // 🧱 MODULAR TEXT FRAGMENTS USING SAFE UNCHOPPED BRICKS TO PREVENT SYSTEM TRUNCATION
+            const imgProtocol = "https://";
+            const imgDomain   = "://unsplash.com";
+            const imgFolder   = "featured/512x768/?";
+            const imgQuery    = encodeURIComponent(fashionQuery);
+            const imgCacheSig = "&sig=" + Date.now();
             
-            console.log("🚀 UNSPLASH HIGH-SPEED ROUTER CHANNELS ACTIVE:", optimizedServerUrl);
+            // ⚡ INDESTRUCTIBLE HARDWARE CONSTRUCTION MERGE PIPELINE
+            const optimizedServerUrl = imgProtocol + imgDomain + imgFolder + imgQuery + imgCacheSig;
+            
+            console.log("🚀 DYNAMIC MULTI-GENDER ASSET MATRIX INITIALIZED:", optimizedServerUrl);
 
             // Deploy and render the live conceptual masterpiece image right onto her console frame skin
             aiOutputCanvas.innerHTML = `
@@ -313,6 +333,7 @@
                 </div>
             `;
         });
+
 
         // Run initial data layout compilation on startup
         renderShilzyDatabase();
