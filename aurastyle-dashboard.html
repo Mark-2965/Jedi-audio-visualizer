@@ -163,6 +163,13 @@
                     <p style="color: var(--text-muted); font-style: italic; text-align: center; margin: 15px 0;">No active client profiles saved on this workstation hardware node.</p>
                 </div>
             </div>
+                        <!-- 📱 SHILZY ENTERPRISE WHATSAPP CLIENT RECEIPT EXPORTER BUTTON PANEL -->
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(168, 85, 247, 0.2);">
+                <button id="export-whatsapp-btn" style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; margin-top: 5px;">
+                    🟢 Export Last Profile to WhatsApp
+                </button>
+            </div>
+
         </div>
 
                 <!-- RIGHT COLUMN: SHILZY AI STYLE CONCEPT ENGINE -->
@@ -309,6 +316,41 @@
 
         // Run initial data layout compilation on startup
         renderShilzyDatabase();
+                // 📱 SHILZY ENTERPRISE MODULAR WHATSAPP DATA EXPORTER ROUTINE
+        const exportWhatsappBtn = document.getElementById('export-whatsapp-btn');
+
+        exportWhatsappBtn.addEventListener('click', () => {
+            // Check if the ledger database contains any active customer profiles
+            if (shilzyDatabase.length === 0) {
+                alert('⚠️ EXPORT FAILURE: LEDGER VACANT!\nPlease record at least one client fitting profile before exporting.');
+                return;
+            }
+
+            // Extract the most recently committed customer data record matrix
+            const lastClient = shilzyDatabase[shilzyDatabase.length - 1];
+            
+            // 🧱 SAFE STRING BRICKS TO PREVENT SYSTEM TRUNCATION
+            const waBase   = "https://whatsapp.com";
+            const waRouter = "send?text=";
+            
+            // Compose the bespoke textual measurement layout card
+            const headline     = `👑 *SHILZY COLLECTION // BESPOKE FITTING RECEIPT* 👑\n\n`;
+            const profileInfo  = `👤 *Client Name:* ${lastClient.client_name}\n⏰ *Record Timestamp:* ${lastClient.timestamp}\n\n`;
+            const metricsCard  = `📐 *CORE MEASUREMENTS (Inches):*\n• Chest/Bust: ${lastClient.metrics.chest}"\n• Waist: ${lastClient.metrics.waist}"\n• Hips: ${lastClient.metrics.hips}"\n• Sleeve: ${lastClient.metrics.sleeve}"\n\n`;
+            const notesBlock   = `📝 *Design Blueprint Notes:*\n_${lastClient.blueprint_notes}_`;
+            
+            const rawMessageText = headline + profileInfo + metricsCard + notesBlock;
+            
+            // ⚡ CLEAN ENCODING TRANSIT JOIN LOOP
+            const encryptedMessage = encodeURIComponent(rawMessageText);
+            const finalTransitUrl = waBase + waRouter + encryptedMessage;
+            
+            console.log("🚀 MODULAR WHATSAPP LINK MATRIX INITIALIZED:", finalTransitUrl);
+            
+            // Fire open a secure external browser socket lane to pass the text payload directly into WhatsApp
+            window.open(finalTransitUrl, '_blank');
+        });
+
     </script>
 </body>
 </html>
