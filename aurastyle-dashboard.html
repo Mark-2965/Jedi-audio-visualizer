@@ -293,27 +293,36 @@
             aiOutputCanvas.style.color = "#00ff87";
 
             const lowerPrompt = promptText.toLowerCase();
+        
             
-                     // 📐 ADVANCED MULTI-GENDER CATEGORY ROUTING MATRIX (VERIFIED ACTIVE ASSET PATHS)
-            // Default image fallback asset ID: Vibrant fashion gown lookbook look
-            let activeAssetId = "photo-1595777457583-95e059d581b8"; 
+            // 📐 AIRTIGHT HYBRID CATEGORY MATCHING ENGINE
+            let activeAssetId = "photo-1595777457583-95e059d581b8"; // Default Fallback: Royal Blue Dress
             
-            if (lowerPrompt.includes('men') || lowerPrompt.includes('man') || lowerPrompt.includes('guy') || lowerPrompt.includes('male') || lowerPrompt.includes('suit') || lowerPrompt.includes('corporate')) {
-                if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('native') || lowerPrompt.includes('caftan') || lowerPrompt.includes('wear')) {
-                    // Verified Active Asset ID: Premium Tailored Menswear Caftan / Traditional Lookbook Presentation
+            // 🚨 FIRST LAYER: Check for Women's Traditional / Ankara styles explicitly to avoid male crossovers
+            if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('flare') || lowerPrompt.includes('lace')) {
+                // Verified Premium Womenswear Ankara-inspired lookbook photo asset ID
+                activeAssetId = "photo-1566207274740-0f8cf6b7d5a5"; 
+            } 
+            // SECOND LAYER: Check for Men's wear configurations
+            else if (lowerPrompt.includes('men') || lowerPrompt.includes('man') || lowerPrompt.includes('guy') || lowerPrompt.includes('male') || lowerPrompt.includes('boy')) {
+                if (lowerPrompt.includes('native') || lowerPrompt.includes('caftan') || lowerPrompt.includes('wear')) {
+                    // Verified Premium Menswear Caftan / Traditional Lookbook asset ID
                     activeAssetId = "photo-1507679799987-c73779587ccf"; 
                 } else {
-                    // Verified Active Asset ID: Sharp Corporate tailored menswear suit jacket lookbook
+                    // Default Menswear: Corporate tailored suit jacket lookbook asset ID
                     activeAssetId = "photo-1594938298603-c8148c4dae35"; 
                 }
-            } else if (lowerPrompt.includes('ankara') || lowerPrompt.includes('traditional') || lowerPrompt.includes('flare') || lowerPrompt.includes('lace')) {
-                // Verified Active Asset ID: Premium Womenswear Ankara inspired traditional flare dress lookbook
-                activeAssetId = "photo-1566207274740-0f8cf6b7d5a5"; 
+            } 
+            // THIRD LAYER: Check for Women's Corporate specific gown inputs
+            else if (lowerPrompt.includes('corporate') || lowerPrompt.includes('office') || lowerPrompt.includes('gown')) {
+                // Default Women's fallback: Royal Blue Dress
+                activeAssetId = "photo-1595777457583-95e059d581b8";
             }
+
 
             // 🧱 SAFE UNCHOPPED TEXT BRICKS TO BYPASS AUTOMATED PLATFORM TRUNCATIONS
             const secureProtocol = "https://";
-            const stableMediaDomain = "images.unsplash.com";
+            const stableMediaDomain = "images.unsplash.com/";
             const imageFolderRoute = activeAssetId;
             const assetScaleParameters = "?auto=format&fit=crop&w=512&h=768&q=80&sig=";
             
