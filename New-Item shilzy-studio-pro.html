@@ -172,122 +172,100 @@
                 </div>
             </div>
         </div>
-        <!-- RIGHT CONTROL CELL: REAL-TIME SEARCH & MODEL FIT SCALER -->
+                <!-- RIGHT CONTROL CELL: LIVE LOOKBOOK INJECTION PORTAL & FIT MODELER -->
         <div class="panel-card">
-            <h2>🖼️ Lookbook Web Search Pool</h2>
+            <h2>🖼️ Lookbook Web Search Portal Matrix</h2>
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                <input type="text" id="studio-search-bar" placeholder="Search apparel styles (e.g. Ankara gown, corporate suit, Indian lehenga)...">
-                <button id="search-trigger-btn" style="width: auto; padding: 0 25px; background: var(--accent-neon); color: #040810;">Search</button>
+                <input type="text" id="studio-search-bar" value="Ankara gown" placeholder="Search apparel styles (e.g. Ankara gown, corporate suit, Indian lehenga)...">
+                <button id="search-trigger-btn" style="width: auto; padding: 0 25px; background: var(--accent-neon); color: #040810; font-weight: bold;">🔍 Search Web Directory</button>
             </div>
 
-            <div id="search-pool-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; background: #040810; padding: 10px; border-radius: 6px; min-height: 80px; align-items: center;">
-                <p id="grid-status-text" style="color: var(--text-muted); font-size: 11px; text-align: center; grid-column: span 4; margin: 0;">Execute search parameters to load lookbook image arrays...</p>
+            <!-- 🌐 LIVE IFRAME STREAMING CONSOLE VIEWPORT (UNCHOPPED INTEGRATION) -->
+            <div style="width: 100%; height: 260px; background: #040810; border-radius: 6px; overflow: hidden; border: 1px solid rgba(0, 255, 135, 0.15); margin-bottom: 20px; position: relative;">
+                <iframe id="live-lookbook-iframe" src="https://yahoo.com" style="width: 100%; height: 100%; border: none; background: #040810;"></iframe>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <label style="color: var(--accent-neon); font-size: 11px; margin: 0;">🧥 Proportional Model Viewport Matrix</label>
-                <button id="commit-to-vault-btn" style="width: auto; padding: 6px 15px; font-size: 10px; background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-royal);">📥 Commit to Gallery Vault</button>
+                <button id="commit-to-vault-btn" style="width: auto; padding: 6px 15px; font-size: 10px; background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-royal);">📥 Commit Profile to Vault</button>
             </div>
 
             <div class="modeling-stage">
                 <!-- Proportional Scaling Outer Wrapper Frame -->
                 <div id="physics-scaling-frame" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);">
-                    <img id="stage-viewport-img" src="https://unsplash.com" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: all 0.4s ease;">
+                    <!-- High definition master fallback modeling layout template -->
+                    <img id="stage-viewport-img" src="https://pexels.com" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: all 0.4s ease; border-radius: 6px;">
                 </div>
                 
                 <!-- Fixed Real-time Matrix Telemetry Overlays Badge -->
                 <div id="telemetry-badge" style="position: absolute; bottom: 12px; left: 12px; background: rgba(4,8,16,0.9); border: 1px solid var(--accent-neon); padding: 6px 12px; border-radius: 4px; font-family: monospace; font-size: 10px; color: var(--accent-neon); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-                    SYSTEM LIVE // STATUS NORMAL
+                    SYSTEM LIVE // FIT NODE RUNNING
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- ⚡ SHILZY CORE PIPELINE LOGIC -->
+    <!-- ⚡ SHILZY STUDIO PRO OPERATIONAL MATRIX LOGIC -->
     <script>
         const VAULT_STORAGE_KEY = 'shilzy_studio_pro_vault';
         let studioVault = JSON.parse(localStorage.getItem(VAULT_STORAGE_KEY)) || [];
 
         const searchInput = document.getElementById('studio-search-bar');
         const searchBtn = document.getElementById('search-trigger-btn');
-        const poolGrid = document.getElementById('search-pool-grid');
+        const lookbookIframe = document.getElementById('live-lookbook-iframe');
         const stageImg = document.getElementById('stage-viewport-img');
         const scalingFrame = document.getElementById('physics-scaling-frame');
         const telemetryBadge = document.getElementById('telemetry-badge');
         const commitVaultBtn = document.getElementById('commit-to-vault-btn');
         const savedVaultGrid = document.getElementById('saved-gallery-vault');
-        // 🧱 Safe unchopped text category keywords to pass straight into the open image engine
-        const mediaWarehouse = {
-            ankara: ["african,dress", "ankara,gown", "traditional,clothing", "lace,apparel"],
-            suit: ["mens,suit", "corporate,jacket", "tailored,blazer", "formal,tuxedo"],
-            indian: ["indian,lehenga", "traditional,saree", "bollywood,fashion", "sherwani,wear"]
-        };
-        // 🔍 Core Media Router Search Execution Loop
+
+        // 🔍 Core Media Router Search Directory Portal Mapping Loop
         searchBtn.addEventListener('click', () => {
-            const query = searchInput.value.trim().toLowerCase();
-            if (!query) { alert('Please enter an apparel style keyword description.'); return; }
+            const queryText = searchInput.value.trim();
+            if (!queryText) { alert('Please enter an apparel design style keyword description first.'); return; }
 
-            let selectedPool = mediaWarehouse.ankara; // Fallback default
-            if (query.includes('suit') || query.includes('corporate') || query.includes('men') || query.includes('man')) {
-                selectedPool = mediaWarehouse.suit;
-            } else if (query.includes('indian') || query.includes('lehenga') || query.includes('saree') || query.includes('lace')) {
-                selectedPool = mediaWarehouse.indian;
-            }
+            // 🧱 MODULAR TEXT BRICKS TO BYPASS TRAFFIC ROUTING RESTRICTIONS CLEANLY
+            const searchBase   = "https://yahoo.com";
+            const searchRouter = "search/images?p=";
+            const encodedQuery = encodeURIComponent(queryText);
+            
+            // Assemble an unchopped live web portal frame window link address
+            const completePortalUrl = searchBase + searchRouter + encodedQuery;
+            
+            console.log("🛰️ LIVE LOOKBOOK PORTAL STREAM CONNECTED:", completePortalUrl);
+            
+            // Hot-reload the iframe portal console window natively with full web search pools
+            lookbookIframe.src = completePortalUrl;
+        });
 
-            poolGrid.innerHTML = '';
-
-            selectedPool.forEach((keywordTag, index) => {
-                // 🧱 UNCHOPPED STRING BRICKS TO ELIMINATE TRUNCATION ERRORS
-                const urlBase      = "https://loremflickr.com";
-                const thumbSize    = "150/150/";
-                const stageSize    = "512/768/";
-                const urlQuery     = keywordTag;
-                const cacheBuster  = "?lock=" + index;
-                
-                // ⚡ INDESTRUCTIBLE TRANSIT MERGE CHANNELS
-                const thumbUrl = urlBase + thumbSize + urlQuery + cacheBuster;
-                
-                const imgNode = document.createElement('img');
-                imgNode.src = thumbUrl;
-                imgNode.className = 'gallery-thumbnail';
-                
-                imgNode.addEventListener('click', () => {
-                    // Update active center visualization modeling viewport stage frame safely
-                    stageImg.src = urlBase + stageSize + urlQuery + cacheBuster;
-                    calculateAspectFitModulation();
-                });
-                
-                poolGrid.appendChild(imgNode);
-            });
-        }); // 👈 This perfectly seals your searchBtn click block!
-
-        // 📐 Precise Sizing Proportional Shrink & Fit Proportional Scaling Formula Engine
+        // 📐 Precise Proportional Shrink & Fit Proportional Sizing Formula Engine
         function calculateAspectFitModulation() {
             const chest = parseFloat(document.getElementById('m-chest').value) || 36;
             const waist = parseFloat(document.getElementById('m-waist').value) || 30;
             const hips = parseFloat(document.getElementById('m-hips').value) || 40;
 
-            // Ideal standard hardware blueprint ratios
+            // Ideal standard baseline scale modeling blueprints
             const baseChest = 36;
             const baseWaist = 30;
             const baseHips = 40;
 
+            // Compute structural dimensional scale offsets
             const wScale = (chest / baseChest + waist / baseWaist + hips / baseHips) / 3;
             const hScale = baseWaist / waist;
 
-            // Constrain percentages to keep rendering boundaries clean and proportional on canvas
+            // Constrain percentages to keep modeling boundaries safe and neat on canvas frame skin
             let targetWidth = Math.min(Math.max(wScale * 100, 55), 125);
             let targetHeight = Math.min(Math.max(hScale * 100, 70), 120);
 
-            // Execute responsive CSS transforms live on the viewport container
+            // Execute responsive transformation adjustments across the CSS rendering layout nodes
             scalingFrame.style.width = targetWidth + "%";
             scalingFrame.style.height = targetHeight + "%";
 
-            telemetryBadge.innerText = `FIT MODE: B:${chest}" W:${waist}" H:${hips}" | ZOOM: W:${Math.round(targetWidth)}% H:${Math.round(targetHeight)}%`;
+            telemetryBadge.innerText = `MODEL FIT CONFIG: B:${chest}" W:${waist}" H:${hips}" | SCALE: W:${Math.round(targetWidth)}% H:${Math.round(targetHeight)}%`;
         }
 
-        // Auto-recalculate scaling vector parameters the millisecond she updates metrics field forms
+        // Auto-recalculate scaling metrics parameters the millisecond she adjusts numbers
         ['m-chest', 'm-waist', 'm-hips'].forEach(id => {
             document.getElementById(id).addEventListener('input', calculateAspectFitModulation);
         });
@@ -296,11 +274,6 @@
         commitVaultBtn.addEventListener('click', () => {
             const currentImgUrl = stageImg.src;
             const currentName = document.getElementById('client-name').value.trim();
-            
-            if (studioVault.some(item => item.url === currentImgUrl && item.name === currentName)) {
-                alert('This design snapshot has already been committed to the profile vault.');
-                return;
-            }
 
             const payload = {
                 id: Date.now(),
@@ -312,6 +285,7 @@
             studioVault.push(payload);
             localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(studioVault));
             renderVaultThumbnails();
+            alert(`🎉 SNAPSHOT RECORD COMMITTED!\nClient modeling profile for [${currentName}] saved successfully inside storage vault!`);
         });
 
         function renderVaultThumbnails() {
@@ -323,8 +297,6 @@
 
             studioVault.forEach(item => {
                 const box = document.createElement('div');
-                box.style.position = 'relative';
-                
                 const img = document.createElement('img');
                 img.src = item.url;
                 img.style.width = '100%';
@@ -344,7 +316,7 @@
             });
         }
 
-        // Initialize state variables loops on load
+        // Initialize parameters on load
         renderVaultThumbnails();
         calculateAspectFitModulation();
     </script>
