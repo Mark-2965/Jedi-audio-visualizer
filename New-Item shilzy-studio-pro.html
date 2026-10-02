@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shilzy Studio PRO // Fit Scale Modeling Node</title>
+    <style>
+        :root {
+            --bg-main: #040810;
+            --bg-card: #09101d;
+            --accent-neon: #00ff87;
+            --accent-royal: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .studio-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .panel-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 255, 135, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: var(--accent-neon);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 255, 135, 0.1);
+            padding-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 10px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: #040810;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 13px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-neon);
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-royal), #6366f1);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: filter 0.3s;
+            font-size: 11px;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+        }
+
+        .gallery-thumbnail {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .gallery-thumbnail:hover {
+            border-color: var(--accent-neon);
+            transform: scale(1.03);
+        }
+
+        .modeling-stage {
+            width: 100%;
+            height: 480px;
+            background: #02050b;
+            border: 2px dashed rgba(0, 255, 135, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 👑 SHILZY STUDIO PRO ENTERPRISE HEADER -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="margin: 0; font-size: 28px; letter-spacing: 4px; color: white; font-weight: 900;">SHILZY STUDIO PRO</h1>
+        <p style="color: var(--accent-neon); font-size: 11px; margin: 6px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">⚡ ACTIVE FIT MODULATION ENGINE & LIVE LOOKBOOK VAULT ⚡</p>
+    </div>
+
+    <div class="studio-container">
+        <!-- LEFT CONTROL CELL: CLIENT FITTING LEDGER NODE -->
+        <div class="panel-card">
+            <h2>📐 Client Sizing Metrics</h2>
+            <div class="form-group">
+                <label>Client Full Name</label>
+                <input type="text" id="client-name" value="Amara Okafor">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="form-group">
+                    <label>Bust / Chest (in)</label>
+                    <input type="number" id="m-chest" value="36" min="20" max="60">
+                </div>
+                <div class="form-group">
+                    <label>Waist (in)</label>
+                    <input type="number" id="m-waist" value="30" min="15" max="55">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="form-group">
+                    <label>Hips (in)</label>
+                    <input type="number" id="m-hips" value="40" min="25" max="65">
+                </div>
+                <div class="form-group">
+                    <label>Sleeve Length (in)</label>
+                    <input type="number" id="m-sleeve" value="24">
+                </div>
+            </div>
+            
+            <div style="margin-top: 25px; border-top: 1px solid rgba(0, 255, 135, 0.15); padding-top: 20px;">
+                <label style="color: var(--accent-royal); margin-bottom: 10px; display: block;">📜 Studio Design Gallery Vault</label>
+                <div id="saved-gallery-vault" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-height: 150px; overflow-y: auto;">
+                    <!-- Saved snapshots persist here -->
+                </div>
+            </div>
+        </div>
+        <!-- RIGHT CONTROL CELL: REAL-TIME SEARCH & MODEL FIT SCALER -->
+        <div class="panel-card">
+            <h2>🖼️ Lookbook Web Search Pool</h2>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="studio-search-bar" placeholder="Search apparel styles (e.g. Ankara gown, corporate suit, Indian lehenga)...">
+                <button id="search-trigger-btn" style="width: auto; padding: 0 25px; background: var(--accent-neon); color: #040810;">Search</button>
+            </div>
+
+            <div id="search-pool-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; background: #040810; padding: 10px; border-radius: 6px; min-height: 80px; align-items: center;">
+                <p id="grid-status-text" style="color: var(--text-muted); font-size: 11px; text-align: center; grid-column: span 4; margin: 0;">Execute search parameters to load lookbook image arrays...</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <label style="color: var(--accent-neon); font-size: 11px; margin: 0;">🧥 Proportional Model Viewport Matrix</label>
+                <button id="commit-to-vault-btn" style="width: auto; padding: 6px 15px; font-size: 10px; background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-royal);">📥 Commit to Gallery Vault</button>
+            </div>
+
+            <div class="modeling-stage">
+                <!-- Proportional Scaling Outer Wrapper Frame -->
+                <div id="physics-scaling-frame" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);">
+                    <img id="stage-viewport-img" src="https://unsplash.com" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: all 0.4s ease;">
+                </div>
+                
+                <!-- Fixed Real-time Matrix Telemetry Overlays Badge -->
+                <div id="telemetry-badge" style="position: absolute; bottom: 12px; left: 12px; background: rgba(4,8,16,0.9); border: 1px solid var(--accent-neon); padding: 6px 12px; border-radius: 4px; font-family: monospace; font-size: 10px; color: var(--accent-neon); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                    SYSTEM LIVE // STATUS NORMAL
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ⚡ SHILZY CORE PIPELINE LOGIC -->
+    <script>
+        const VAULT_STORAGE_KEY = 'shilzy_studio_pro_vault';
+        let studioVault = JSON.parse(localStorage.getItem(VAULT_STORAGE_KEY)) || [];
+
+        const searchInput = document.getElementById('studio-search-bar');
+        const searchBtn = document.getElementById('search-trigger-btn');
+        const poolGrid = document.getElementById('search-pool-grid');
+        const stageImg = document.getElementById('stage-viewport-img');
+        const scalingFrame = document.getElementById('physics-scaling-frame');
+        const telemetryBadge = document.getElementById('telemetry-badge');
+        const commitVaultBtn = document.getElementById('commit-to-vault-btn');
+        const savedVaultGrid = document.getElementById('saved-gallery-vault');
+        // 🧱 Safe unchopped text category keywords to pass straight into the open image engine
+        const mediaWarehouse = {
+            ankara: ["african,dress", "ankara,gown", "traditional,clothing", "lace,apparel"],
+            suit: ["mens,suit", "corporate,jacket", "tailored,blazer", "formal,tuxedo"],
+            indian: ["indian,lehenga", "traditional,saree", "bollywood,fashion", "sherwani,wear"]
+        };
+
+        // 🔍 Core Media Router Search Execution Loop
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) { alert('Please enter an apparel style keyword description.'); return; }
+
+            let selectedPool = mediaWarehouse.ankara; // Fallback default
+            if (query.includes('suit') || query.includes('corporate') || query.includes('men') || query.includes('man')) {
+                selectedPool = mediaWarehouse.suit;
+            } else if (query.includes('indian') || query.includes('lehenga') || query.includes('saree') || query.includes('lace')) {
+                selectedPool = mediaWarehouse.indian;
+            }
+
+            poolGrid.innerHTML = '';
+
+            selectedPool.forEach((keywordTag, index) => {
+                // ⚡ Direct high-speed keyword path routing using LoremFlickr global servers
+                const thumbUrl = "https://loremflickr.com" + keywordTag + "?lock=" + index;
+                const imgNode = document.createElement('img');
+                imgNode.src = thumbUrl;
+                imgNode.className = 'gallery-thumbnail';
+                
+                imgNode.addEventListener('click', () => {
+                    // Update active center visualization modeling viewport stage frame
+                    stageImg.src = "https://loremflickr.com" + keywordTag + "?lock=" + index;
+                    calculateAspectFitModulation();
+                });
+                
+                poolGrid.appendChild(imgNode);
+            });
+        });
+
+
+        // 📐 Precise Sizing Proportional Shrink & Fit Proportional Scaling Formula Engine
+        function calculateAspectFitModulation() {
+            const chest = parseFloat(document.getElementById('m-chest').value) || 36;
+            const waist = parseFloat(document.getElementById('m-waist').value) || 30;
+            const hips = parseFloat(document.getElementById('m-hips').value) || 40;
+
+            // Ideal standard hardware blueprint ratios
+            const baseChest = 36;
+            const baseWaist = 30;
+            const baseHips = 40;
+
+            const wScale = (chest / baseChest + waist / baseWaist + hips / baseHips) / 3;
+            const hScale = baseWaist / waist;
+
+            // Constrain percentages to keep rendering boundaries clean and proportional on canvas
+            let targetWidth = Math.min(Math.max(wScale * 100, 55), 125);
+            let targetHeight = Math.min(Math.max(hScale * 100, 70), 120);
+
+            // Execute responsive CSS transforms live on the viewport container
+            scalingFrame.style.width = targetWidth + "%";
+            scalingFrame.style.height = targetHeight + "%";
+
+            telemetryBadge.innerText = `FIT MODE: B:${chest}" W:${waist}" H:${hips}" | ZOOM: W:${Math.round(targetWidth)}% H:${Math.round(targetHeight)}%`;
+        }
+
+        // Auto-recalculate scaling vector parameters the millisecond she updates metrics field forms
+        ['m-chest', 'm-waist', 'm-hips'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateAspectFitModulation);
+        });
+
+        // 📥 Persistent Collection Vault Storage Execution
+        commitVaultBtn.addEventListener('click', () => {
+            const currentImgUrl = stageImg.src;
+            const currentName = document.getElementById('client-name').value.trim();
+            
+            if (studioVault.some(item => item.url === currentImgUrl && item.name === currentName)) {
+                alert('This design snapshot has already been committed to the profile vault.');
+                return;
+            }
+
+            const payload = {
+                id: Date.now(),
+                name: currentName,
+                url: currentImgUrl,
+                timestamp: new Date().toLocaleTimeString()
+            };
+
+            studioVault.push(payload);
+            localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(studioVault));
+            renderVaultThumbnails();
+        });
+
+        function renderVaultThumbnails() {
+            savedVaultGrid.innerHTML = '';
+            if (studioVault.length === 0) {
+                savedVaultGrid.innerHTML = `<p style="color: var(--text-muted); font-size: 9px; grid-column: span 3; text-align: center; margin: 10px 0;">Vault clean.</p>`;
+                return;
+            }
+
+            studioVault.forEach(item => {
+                const box = document.createElement('div');
+                box.style.position = 'relative';
+                
+                const img = document.createElement('img');
+                img.src = item.url;
+                img.style.width = '100%';
+                img.style.height = '45px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '4px';
+                img.style.border = '1px solid var(--accent-royal)';
+                img.style.cursor = 'pointer';
+                
+                img.addEventListener('click', () => {
+                    stageImg.src = item.url;
+                    calculateAspectFitModulation();
+                });
+
+                box.appendChild(img);
+                savedVaultGrid.appendChild(box);
+            });
+        }
+
+        // Initialize state variables loops on load
+        renderVaultThumbnails();
+        calculateAspectFitModulation();
+    </script>
+</body>
+</html>
