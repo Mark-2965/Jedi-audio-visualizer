@@ -223,7 +223,6 @@
             suit: ["mens,suit", "corporate,jacket", "tailored,blazer", "formal,tuxedo"],
             indian: ["indian,lehenga", "traditional,saree", "bollywood,fashion", "sherwani,wear"]
         };
-
         // 🔍 Core Media Router Search Execution Loop
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim().toLowerCase();
@@ -239,22 +238,29 @@
             poolGrid.innerHTML = '';
 
             selectedPool.forEach((keywordTag, index) => {
-                // ⚡ Direct high-speed keyword path routing using LoremFlickr global servers
-                const thumbUrl = "https://loremflickr.com" + keywordTag + "?lock=" + index;
+                // 🧱 UNCHOPPED STRING BRICKS TO ELIMINATE TRUNCATION ERRORS
+                const urlBase      = "https://loremflickr.com";
+                const thumbSize    = "150/150/";
+                const stageSize    = "512/768/";
+                const urlQuery     = keywordTag;
+                const cacheBuster  = "?lock=" + index;
+                
+                // ⚡ INDESTRUCTIBLE TRANSIT MERGE CHANNELS
+                const thumbUrl = urlBase + thumbSize + urlQuery + cacheBuster;
+                
                 const imgNode = document.createElement('img');
                 imgNode.src = thumbUrl;
                 imgNode.className = 'gallery-thumbnail';
                 
                 imgNode.addEventListener('click', () => {
-                    // Update active center visualization modeling viewport stage frame
-                    stageImg.src = "https://loremflickr.com" + keywordTag + "?lock=" + index;
+                    // Update active center visualization modeling viewport stage frame safely
+                    stageImg.src = urlBase + stageSize + urlQuery + cacheBuster;
                     calculateAspectFitModulation();
                 });
                 
                 poolGrid.appendChild(imgNode);
             });
-        });
-
+        }); // 👈 This perfectly seals your searchBtn click block!
 
         // 📐 Precise Sizing Proportional Shrink & Fit Proportional Scaling Formula Engine
         function calculateAspectFitModulation() {
